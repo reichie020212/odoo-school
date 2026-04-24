@@ -9,48 +9,55 @@ editor: markdown
 
 # Permissions matrix
 
-All access runs through three groups bound to the **School Management** privilege (Odoo 19 `res.groups.privilege`):
+Access is granted at two levels:
 
-- **Reader** — read-only on all school models.
-- **User** — everyday ops: students, classrooms, courses, attendance, exam results, fee enrollments, scholarships, library loans, canteen transactions, shop sales, transport assignments.
-- **Manager** — everything User can do plus: academic year lifecycle, grading scales, fee structures, library catalog, canteen dietary tags, shop items, automation rules, the admission-number sequence.
+1. **Internal users** (`base.group_user`) — any staff with a backend login. They get read access to school **reference / structural** data automatically so the standard Odoo flows (Contacts, Sales, HR, Purchase) don't break on `res.partner` / `hr.employee` / `product.template` forms that inherit school fields. They do NOT see transactional data (grades, fees, loans, etc.) without further groups.
+2. **School Management groups** — three groups bound to the Odoo 19 `res.groups.privilege` *School Management*:
+   - **Reader** — read-only on all school models (including transactional).
+   - **User** — everyday ops: students, classrooms, courses, attendance, exam results, fee enrollments, scholarships, library loans, canteen transactions, shop sales, transport assignments.
+   - **Manager** — everything User can do plus: academic year lifecycle, grading scales, fee structures, library catalog, canteen dietary tags, shop items, automation rules, the admission-number sequence.
 
-Each group inherits the lower one via `implied_ids` — Manager is a superset of User is a superset of Reader.
+Each School group inherits the lower one via `implied_ids` — Manager ⊃ User ⊃ Reader.
+
+> **Install-time note:** `school_base` ships a `post_init_hook` that auto-grants `base.user_admin` the School Manager group so a fresh install has a usable sysadmin on first login. Other users need the group granted through **Settings → Users & Companies → Users**.
 
 ## Per-model access
 
-| Model | Reader | User | Manager |
-|---|---|---|---|
-| `school.academic.year` | R | R | RWCU |
-| `school.academic.term` | R | RWC | RWCU |
-| `school.classroom` | R | RWC | RWCU |
-| `res.partner` (school fields) | R | RWC | RWCU |
-| `hr.employee` (teacher fields) | R | RW | RWCU |
-| `school.subject` | R | RWC | RWCU |
-| `school.course` + `.schedule.rule` | R | RWC | RWCU |
-| `school.attendance` | R | RWC | RWCU |
-| `school.grading.scale` + `.band` | R | R | RWCU |
-| `school.exam.type` | R | R | RWCU |
-| `school.exam` | R | RWC | RWCU |
-| `school.exam.result` | R | RWC | RWCU |
-| `school.report.card` + `.line` | R | RWC | RWCU |
-| `school.fee.structure` + `.line` | R | R | RWCU |
-| `school.fee.enrollment` | R | RWC | RWCU |
-| `school.scholarship` | R | RWC | RWCU |
-| `product.template` (`is_school_fee` / `is_canteen_item` / `is_school_shop_item`) | R | R | RWCU |
-| `school.library.book` + `.copy` | R | R | RWCU |
-| `school.library.loan` | R | RWC | RWCU |
-| `school.library.category` + `.author` | R | R | RWCU |
-| `school.canteen.wallet` | R | RWC | RWCU |
-| `school.canteen.transaction` | R | RWC | RWCU |
-| `school.canteen.menu` | R | RWC | RWCU |
-| `school.canteen.dietary.tag` | R | R | RWCU |
-| `school.shop.sale` + `.line` | R | RWC | RWCU |
-| `school.transport.vehicle` | R | R | RWCU |
-| `school.transport.route` + `.stop` | R | R | RWCU |
-| `school.transport.assignment` | R | RWC | RWCU |
+| Model | Internal (`base.group_user`) | School Reader | School User | School Manager |
+|---|---|---|---|---|
+| `school.academic.year` | R | R | R | RWCU |
+| `school.academic.term` | R | R | RWC | RWCU |
+| `school.classroom` | R | R | RWC | RWCU |
+| `res.partner` (school fields) | via core ACLs | R | RWC | RWCU |
+| `hr.employee` (teacher fields) | via core ACLs | R | RW | RWCU |
+| `school.subject` | R | R | RWC | RWCU |
+| `school.course` + `.schedule.rule` | — | R | RWC | RWCU |
+| `school.attendance` | — | R | RWC | RWCU |
+| `school.grading.scale` + `.band` | R | R | R | RWCU |
+| `school.exam.type` | R | R | R | RWCU |
+| `school.exam` | — | R | RWC | RWCU |
+| `school.exam.result` | — | R | RWC | RWCU |
+| `school.report.card` + `.line` | — | R | RWC | RWCU |
+| `school.fee.structure` + `.line` | — | R | R | RWCU |
+| `school.fee.enrollment` | — | R | RWC | RWCU |
+| `school.scholarship` | — | R | RWC | RWCU |
+| `product.template` (`is_school_fee` / `is_canteen_item` / `is_school_shop_item`) | via core ACLs | R | R | RWCU |
+| `school.library.book` + `.copy` | — | R | R | RWCU |
+| `school.library.loan` | — | R | RWC | RWCU |
+| `school.library.category` | R | R | R | RWCU |
+| `school.library.author` | R | R | R | RWCU |
+| `school.canteen.wallet` | — | R | RWC | RWCU |
+| `school.canteen.transaction` | — | R | RWC | RWCU |
+| `school.canteen.menu` | — | R | RWC | RWCU |
+| `school.canteen.dietary.tag` | R | R | R | RWCU |
+| `school.shop.sale` + `.line` | — | R | RWC | RWCU |
+| `school.transport.vehicle` | — | R | R | RWCU |
+| `school.transport.route` + `.stop` | — | R | R | RWCU |
+| `school.transport.assignment` | — | R | RWC | RWCU |
 
-`R` = read, `W` = write, `C` = create, `U` = unlink (delete).
+`R` = read, `W` = write, `C` = create, `U` = unlink (delete). `—` means the group has no access on that model. "via core ACLs" means the model uses Odoo's standard access (typically readable by all internal users).
+
+**Why the Internal column matters:** every m2o / m2m field from a school model onto a core model (e.g. `res.partner.student_classroom_id`, `res.partner.canteen_allergy_tag_ids`) forces the ORM to **read** the target on form load, regardless of whether the view hides the field. Reference / catalog data (academic year, classroom, subject, dietary tag, grading scale, exam type, library category/author) therefore has to be readable by any internal user, or opening a non-student partner form would fail with an AccessError. Write access remains gated by School Manager.
 
 ## Portal users (students / guardians)
 

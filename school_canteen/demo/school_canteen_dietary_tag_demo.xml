@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="tag_nuts" model="school.canteen.dietary.tag">
+            <field name="name">Contains Nuts</field>
+            <field name="code">nuts</field>
+            <field name="color">1</field>
+        </record>
+        <record id="tag_gluten" model="school.canteen.dietary.tag">
+            <field name="name">Contains Gluten</field>
+            <field name="code">gluten</field>
+            <field name="color">2</field>
+        </record>
+        <record id="tag_dairy" model="school.canteen.dietary.tag">
+            <field name="name">Contains Dairy</field>
+            <field name="code">dairy</field>
+            <field name="color">3</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_canteen_dietary_tag_list" model="ir.ui.view">
+        <field name="name">school.canteen.dietary.tag.list</field>
+        <field name="model">school.canteen.dietary.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="color" widget="color_picker"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_school_canteen_dietary_tag" model="ir.actions.act_window">
+        <field name="name">Dietary Tags</field>
+        <field name="res_model">school.canteen.dietary.tag</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

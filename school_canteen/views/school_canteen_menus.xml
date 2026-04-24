@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_canteen"
+              name="Canteen"
+              parent="school_base.menu_school_root"
+              sequence="55"/>
+
+    <menuitem id="menu_school_canteen_wallets"
+              name="Wallets"
+              parent="menu_school_canteen"
+              action="action_school_canteen_wallet"
+              sequence="10"/>
+
+    <menuitem id="menu_school_canteen_transactions"
+              name="Transactions"
+              parent="menu_school_canteen"
+              action="action_school_canteen_transaction"
+              sequence="20"/>
+
+    <menuitem id="menu_school_canteen_menu"
+              name="Daily Menus"
+              parent="menu_school_canteen"
+              action="action_school_canteen_menu"
+              sequence="30"/>
+
+    <menuitem id="menu_school_canteen_items"
+              name="Canteen Items"
+              parent="school_base.menu_school_configuration"
+              action="action_school_canteen_items"
+              sequence="100"/>
+
+    <menuitem id="menu_school_canteen_dietary_tags"
+              name="Dietary Tags"
+              parent="school_base.menu_school_configuration"
+              action="action_school_canteen_dietary_tag"
+              sequence="110"/>
+
+</odoo>

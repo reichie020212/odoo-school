@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_canteen_transaction_list" model="ir.ui.view">
+        <field name="name">school.canteen.transaction.list</field>
+        <field name="model">school.canteen.transaction</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state=='posted' and type=='topup'"
+                  decoration-info="state=='posted' and type=='purchase'"
+                  decoration-muted="state=='cancelled'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="type"/>
+                <field name="amount" sum="Total"/>
+                <field name="method" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_canteen_transaction_form" model="ir.ui.view">
+        <field name="name">school.canteen.transaction.form</field>
+        <field name="model">school.canteen.transaction</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_post" type="object" string="Post"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state == 'cancelled'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state in ('draft', 'posted')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="wallet_id"/>
+                            <field name="student_id" readonly="1"/>
+                            <field name="type"/>
+                            <field name="method"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="amount" readonly="type == 'purchase'"/>
+                            <field name="posted_at" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Items" name="items" invisible="type != 'purchase'">
+                            <field name="item_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_canteen_transaction" model="ir.actions.act_window">
+        <field name="name">Canteen Transactions</field>
+        <field name="res_model">school.canteen.transaction</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

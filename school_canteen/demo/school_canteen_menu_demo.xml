@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="menu_2026_08_15" model="school.canteen.menu">
+            <field name="name">Menu — 2026-08-15</field>
+            <field name="date" eval="'2026-08-15'"/>
+            <field name="item_ids"
+                   eval="[(6, 0, [
+                       ref('canteen_product_chicken_sandwich'),
+                       ref('canteen_product_rice_bowl'),
+                       ref('canteen_product_cookie')
+                   ])]"/>
+            <field name="state">published</field>
+        </record>
+
+    </data>
+</odoo>

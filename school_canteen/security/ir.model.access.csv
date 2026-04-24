@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_canteen_dietary_tag_reader,school.canteen.dietary.tag reader,model_school_canteen_dietary_tag,school_base.group_school_reader,1,0,0,0
+access_school_canteen_dietary_tag_user,school.canteen.dietary.tag user,model_school_canteen_dietary_tag,school_base.group_school_user,1,0,0,0
+access_school_canteen_dietary_tag_manager,school.canteen.dietary.tag manager,model_school_canteen_dietary_tag,school_base.group_school_manager,1,1,1,1
+access_school_canteen_menu_reader,school.canteen.menu reader,model_school_canteen_menu,school_base.group_school_reader,1,0,0,0
+access_school_canteen_menu_user,school.canteen.menu user,model_school_canteen_menu,school_base.group_school_user,1,1,1,0
+access_school_canteen_menu_manager,school.canteen.menu manager,model_school_canteen_menu,school_base.group_school_manager,1,1,1,1
+access_school_canteen_wallet_reader,school.canteen.wallet reader,model_school_canteen_wallet,school_base.group_school_reader,1,0,0,0
+access_school_canteen_wallet_user,school.canteen.wallet user,model_school_canteen_wallet,school_base.group_school_user,1,1,1,0
+access_school_canteen_wallet_manager,school.canteen.wallet manager,model_school_canteen_wallet,school_base.group_school_manager,1,1,1,1
+access_school_canteen_transaction_reader,school.canteen.transaction reader,model_school_canteen_transaction,school_base.group_school_reader,1,0,0,0
+access_school_canteen_transaction_user,school.canteen.transaction user,model_school_canteen_transaction,school_base.group_school_user,1,1,1,0
+access_school_canteen_transaction_manager,school.canteen.transaction manager,model_school_canteen_transaction,school_base.group_school_manager,1,1,1,1

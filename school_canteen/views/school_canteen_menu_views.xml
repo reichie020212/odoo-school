@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_canteen_menu_list" model="ir.ui.view">
+        <field name="name">school.canteen.menu.list</field>
+        <field name="model">school.canteen.menu</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='published'" decoration-muted="state=='closed'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="item_count"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_canteen_menu_form" model="ir.ui.view">
+        <field name="name">school.canteen.menu.form</field>
+        <field name="model">school.canteen.menu</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_publish" type="object" string="Publish"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'published'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,published,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <field name="date"/>
+                        <field name="item_count" readonly="1"/>
+                    </group>
+                    <group string="Items">
+                        <field name="item_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_canteen_menu" model="ir.actions.act_window">
+        <field name="name">Daily Menus</field>
+        <field name="res_model">school.canteen.menu</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

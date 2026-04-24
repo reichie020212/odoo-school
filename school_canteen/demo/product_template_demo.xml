@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="canteen_product_chicken_sandwich" model="product.product">
+            <field name="name">Chicken Sandwich</field>
+            <field name="default_code">CAN-CHKSND</field>
+            <field name="type">consu</field>
+            <field name="is_canteen_item" eval="True"/>
+            <field name="list_price">45.0</field>
+            <field name="canteen_dietary_tag_ids" eval="[(6, 0, [ref('tag_gluten')])]"/>
+        </record>
+
+        <record id="canteen_product_rice_bowl" model="product.product">
+            <field name="name">Rice Bowl with Grilled Chicken</field>
+            <field name="default_code">CAN-RICE</field>
+            <field name="type">consu</field>
+            <field name="is_canteen_item" eval="True"/>
+            <field name="list_price">65.0</field>
+            <!-- No dietary allergens -->
+        </record>
+
+        <record id="canteen_product_cookie" model="product.product">
+            <field name="name">Peanut Butter Cookie</field>
+            <field name="default_code">CAN-COOKIE</field>
+            <field name="type">consu</field>
+            <field name="is_canteen_item" eval="True"/>
+            <field name="list_price">20.0</field>
+            <field name="canteen_dietary_tag_ids"
+                   eval="[(6, 0, [ref('tag_nuts'), ref('tag_gluten'), ref('tag_dairy')])]"/>
+        </record>
+
+    </data>
+</odoo>

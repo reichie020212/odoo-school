@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_canteen" model="ir.ui.view">
+        <field name="name">product.template.form.canteen</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='list_price']" position="after">
+                <field name="is_canteen_item"/>
+                <field name="canteen_dietary_tag_ids"
+                       widget="many2many_tags"
+                       options="{'color_field': 'color'}"
+                       invisible="not is_canteen_item"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_school_canteen_items" model="ir.actions.act_window">
+        <field name="name">Canteen Items</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_canteen_item', '=', True)]</field>
+        <field name="context">{'default_is_canteen_item': True, 'default_type': 'consu'}</field>
+    </record>
+
+</odoo>

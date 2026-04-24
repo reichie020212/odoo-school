@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="wallet_alice" model="school.canteen.wallet">
+            <field name="student_id" ref="school_base.student_alice_garcia"/>
+            <field name="balance">500.0</field>
+        </record>
+        <record id="wallet_ben" model="school.canteen.wallet">
+            <field name="student_id" ref="school_base.student_ben_garcia"/>
+            <field name="balance">435.0</field>
+        </record>
+
+        <!-- Seed a posted top-up on each wallet so the transaction view isn't empty. -->
+        <record id="topup_alice_1" model="school.canteen.transaction">
+            <field name="wallet_id" ref="wallet_alice"/>
+            <field name="type">topup</field>
+            <field name="date" eval="'2026-08-10'"/>
+            <field name="amount">500.0</field>
+            <field name="method">bank</field>
+            <field name="description">Initial top-up by parent.</field>
+            <field name="state">posted</field>
+            <field name="posted_at" eval="'2026-08-10 09:00:00'"/>
+        </record>
+        <record id="topup_ben_1" model="school.canteen.transaction">
+            <field name="wallet_id" ref="wallet_ben"/>
+            <field name="type">topup</field>
+            <field name="date" eval="'2026-08-10'"/>
+            <field name="amount">500.0</field>
+            <field name="method">cash</field>
+            <field name="state">posted</field>
+            <field name="posted_at" eval="'2026-08-10 09:30:00'"/>
+        </record>
+
+        <!-- Ben bought a rice bowl on 2026-08-15, balance 500 - 65 = 435. -->
+        <record id="purchase_ben_1" model="school.canteen.transaction">
+            <field name="wallet_id" ref="wallet_ben"/>
+            <field name="type">purchase</field>
+            <field name="date" eval="'2026-08-15'"/>
+            <field name="amount">65.0</field>
+            <field name="item_ids" eval="[(6, 0, [ref('canteen_product_rice_bowl')])]"/>
+            <field name="state">posted</field>
+            <field name="posted_at" eval="'2026-08-15 12:05:00'"/>
+        </record>
+
+    </data>
+</odoo>

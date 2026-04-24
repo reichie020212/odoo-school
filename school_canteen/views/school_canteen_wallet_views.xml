@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_canteen_wallet_list" model="ir.ui.view">
+        <field name="name">school.canteen.wallet.list</field>
+        <field name="model">school.canteen.wallet</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state=='frozen'"
+                  decoration-warning="balance &lt; 0"
+                  decoration-info="state=='active'">
+                <field name="student_id"/>
+                <field name="name"/>
+                <field name="balance" sum="Balance"/>
+                <field name="topup_total" optional="show"/>
+                <field name="purchase_total" optional="show"/>
+                <field name="transaction_count" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_canteen_wallet_form" model="ir.ui.view">
+        <field name="name">school.canteen.wallet.form</field>
+        <field name="model">school.canteen.wallet</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_freeze" type="object" string="Freeze"
+                            invisible="state != 'active'"/>
+                    <button name="action_unfreeze" type="object" string="Unfreeze"
+                            class="oe_highlight" invisible="state != 'frozen'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <group>
+                            <field name="balance" readonly="1"/>
+                            <field name="topup_total" readonly="1"/>
+                            <field name="purchase_total" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Transactions" name="transactions">
+                            <field name="transaction_ids" context="{'default_wallet_id': id}">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="amount"/>
+                                    <field name="method"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_canteen_wallet" model="ir.actions.act_window">
+        <field name="name">Student Wallets</field>
+        <field name="res_model">school.canteen.wallet</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

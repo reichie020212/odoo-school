@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Alice is allergic to nuts. -->
+        <record id="school_base.student_alice_garcia" model="res.partner">
+            <field name="canteen_allergy_tag_ids" eval="[(6, 0, [ref('tag_nuts')])]"/>
+        </record>
+
+    </data>
+</odoo>

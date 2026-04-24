@@ -1,0 +1,14 @@
+services:
+  db:
+    restart: unless-stopped
+
+  odoo:
+    image: sms-odoo:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command:
+      - odoo
+      - --config=/etc/odoo/odoo.conf
+      - --workers=2

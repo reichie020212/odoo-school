@@ -1,0 +1,54 @@
+[project]
+name = "odoo-school-management"
+version = "0.1.0"
+description = "School Management System for Odoo 19 CE"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+    "ruff>=0.15.10",
+]
+
+[tool.ruff]
+# Odoo 19 targets Python 3.12
+target-version = "py312"
+# Odoo community standard usually accepts up to 120 characters
+line-length = 120
+
+# Ignore standard Odoo directories that might contain auto-generated or third-party code
+exclude = [
+    ".git",
+    ".ruff_cache",
+    ".venv",
+    "venv",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+# Enable standard formatting, imports sorting, and bugbear rules
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort (automatically sorts your imports)
+    "B",  # flake8-bugbear (finds common bugs)
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade (modernizes python syntax)
+]
+ignore = [
+    "E501", # Line too long (let the Ruff formatter handle this naturally)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Odoo manifests are bare dict literals at module top-level.
+"**/__manifest__.py" = ["B018"]
+# Odoo modules register submodules by importing them in __init__.py solely for
+# the import side effect. Ruff reads these as unused.
+"**/__init__.py" = ["F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

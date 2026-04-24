@@ -1,0 +1,12 @@
+services:
+  db:
+    ports:
+      - "5433:5432"
+
+  odoo:
+    volumes:
+      - ./:/mnt/extra-addons/odoo-school
+    command:
+      - odoo
+      - --config=/etc/odoo/odoo.conf
+      - --dev=all

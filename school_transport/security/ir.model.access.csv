@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_transport_vehicle_reader,school.transport.vehicle reader,model_school_transport_vehicle,school_base.group_school_reader,1,0,0,0
+access_school_transport_vehicle_user,school.transport.vehicle user,model_school_transport_vehicle,school_base.group_school_user,1,0,0,0
+access_school_transport_vehicle_manager,school.transport.vehicle manager,model_school_transport_vehicle,school_base.group_school_manager,1,1,1,1
+access_school_transport_route_reader,school.transport.route reader,model_school_transport_route,school_base.group_school_reader,1,0,0,0
+access_school_transport_route_user,school.transport.route user,model_school_transport_route,school_base.group_school_user,1,0,0,0
+access_school_transport_route_manager,school.transport.route manager,model_school_transport_route,school_base.group_school_manager,1,1,1,1
+access_school_transport_stop_reader,school.transport.stop reader,model_school_transport_stop,school_base.group_school_reader,1,0,0,0
+access_school_transport_stop_user,school.transport.stop user,model_school_transport_stop,school_base.group_school_user,1,0,0,0
+access_school_transport_stop_manager,school.transport.stop manager,model_school_transport_stop,school_base.group_school_manager,1,1,1,1
+access_school_transport_assignment_reader,school.transport.assignment reader,model_school_transport_assignment,school_base.group_school_reader,1,0,0,0
+access_school_transport_assignment_user,school.transport.assignment user,model_school_transport_assignment,school_base.group_school_user,1,1,1,0
+access_school_transport_assignment_manager,school.transport.assignment manager,model_school_transport_assignment,school_base.group_school_manager,1,1,1,1

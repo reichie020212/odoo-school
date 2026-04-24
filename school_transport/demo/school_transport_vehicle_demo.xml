@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="vehicle_bus_01" model="school.transport.vehicle">
+            <field name="plate_number">ABC-1234</field>
+            <field name="model">Toyota Coaster 30-seater</field>
+            <field name="capacity">30</field>
+            <field name="state">active</field>
+        </record>
+
+        <record id="vehicle_bus_02" model="school.transport.vehicle">
+            <field name="plate_number">XYZ-9876</field>
+            <field name="model">Hino Dutro 25-seater</field>
+            <field name="capacity">25</field>
+            <field name="state">active</field>
+        </record>
+
+    </data>
+</odoo>

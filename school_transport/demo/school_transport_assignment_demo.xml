@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="assignment_alice_north" model="school.transport.assignment">
+            <field name="student_id" ref="school_base.student_alice_garcia"/>
+            <field name="route_id" ref="route_north"/>
+            <field name="academic_year_id" ref="school_base.ay_2026_2027"/>
+            <field name="pickup_stop_id" ref="stop_north_001"/>
+            <field name="dropoff_stop_id" ref="stop_north_003"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="assignment_ben_north" model="school.transport.assignment">
+            <field name="student_id" ref="school_base.student_ben_garcia"/>
+            <field name="route_id" ref="route_north"/>
+            <field name="academic_year_id" ref="school_base.ay_2026_2027"/>
+            <field name="pickup_stop_id" ref="stop_north_001"/>
+            <field name="dropoff_stop_id" ref="stop_north_003"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="assignment_dino_south" model="school.transport.assignment">
+            <field name="student_id" ref="school_base.student_dino_bautista"/>
+            <field name="route_id" ref="route_south"/>
+            <field name="academic_year_id" ref="school_base.ay_2026_2027"/>
+            <field name="pickup_stop_id" ref="stop_south_001"/>
+            <field name="dropoff_stop_id" ref="stop_south_003"/>
+            <field name="state">active</field>
+        </record>
+
+    </data>
+</odoo>

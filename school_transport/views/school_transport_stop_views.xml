@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Stops are primarily edited inline from the route form; no standalone action. -->
+    <record id="view_school_transport_stop_list" model="ir.ui.view">
+        <field name="name">school.transport.stop.list</field>
+        <field name="model">school.transport.stop</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="pickup_time" widget="float_time"/>
+                <field name="notes"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

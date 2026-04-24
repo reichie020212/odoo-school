@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_transport"
+              name="Transport"
+              parent="school_base.menu_school_root"
+              sequence="70"/>
+
+    <menuitem id="menu_school_transport_routes"
+              name="Routes"
+              parent="menu_school_transport"
+              action="action_school_transport_route"
+              sequence="10"/>
+
+    <menuitem id="menu_school_transport_assignments"
+              name="Assignments"
+              parent="menu_school_transport"
+              action="action_school_transport_assignment"
+              sequence="20"/>
+
+    <menuitem id="menu_school_transport_vehicles"
+              name="Vehicles"
+              parent="menu_school_transport"
+              action="action_school_transport_vehicle"
+              sequence="30"/>
+
+</odoo>

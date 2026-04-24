@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="homepage" name="School Homepage">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+
+                <!-- Hero -->
+                <section class="s_cover py-5 bg-light">
+                    <div class="container text-center py-5">
+                        <img t-att-src="school_logo_url"
+                             alt="School logo"
+                             class="img-fluid mb-4"
+                             style="max-height: 96px;"/>
+                        <h1 class="display-4 fw-bold" t-out="school_name"/>
+                        <p class="lead mt-3">
+                            Welcome to our school management portal — a single place to
+                            see grades, attendance, fees, library books, transport
+                            assignments, and more.
+                        </p>
+                        <div class="mt-4">
+                            <a href="/my" class="btn btn-primary btn-lg me-2">
+                                Sign In (Portal)
+                            </a>
+                            <a href="/web" class="btn btn-outline-secondary btn-lg">
+                                Staff Login
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick stats -->
+                <section class="s_numbers py-5">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-6 col-md-4 col-lg mb-3">
+                                <div class="h2 fw-bold text-primary" t-out="stat_students"/>
+                                <div class="text-muted">Students</div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg mb-3">
+                                <div class="h2 fw-bold text-primary" t-out="stat_teachers"/>
+                                <div class="text-muted">Teachers</div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg mb-3">
+                                <div class="h2 fw-bold text-primary" t-out="stat_classrooms"/>
+                                <div class="text-muted">Classrooms</div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg mb-3">
+                                <div class="h2 fw-bold text-primary" t-out="stat_courses"/>
+                                <div class="text-muted">Courses</div>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg mb-3">
+                                <div class="h2 fw-bold text-primary" t-out="stat_books"/>
+                                <div class="text-muted">Library Books</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features grid -->
+                <section class="s_three_columns py-5 bg-light">
+                    <div class="container">
+                        <h2 class="text-center mb-5">What students and parents can do</h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">View Grades</h5>
+                                        <p class="card-text">
+                                            Access the latest exam results and finalized
+                                            report cards from any term.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Track Fees</h5>
+                                        <p class="card-text">
+                                            See tuition invoices, applied scholarships,
+                                            and outstanding balances per term.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Stay Notified</h5>
+                                        <p class="card-text">
+                                            Automatic emails for new invoices, finalized
+                                            report cards, and published exams.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-4 text-center">
+                    <div class="container">
+                        <small class="text-muted">
+                            Powered by Odoo 19 — Edit this page from the Website builder.
+                        </small>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+</odoo>

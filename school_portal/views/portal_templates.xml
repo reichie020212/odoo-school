@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit the portal home to show a "School" card. -->
+    <template id="portal_my_home_school" name="Portal My Home : School"
+              inherit_id="portal.portal_my_home" customize_show="True" priority="25">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">School</t>
+                <t t-set="text">Grades, attendance, and fee enrollments</t>
+                <t t-set="url" t-value="'/my/school'"/>
+                <t t-set="config_card" t-value="True"/>
+                <t t-set="placeholder_count" t-value="'0'"/>
+            </t>
+        </div>
+    </template>
+
+    <!-- Dedicated /my/school page. -->
+    <template id="portal_my_school" name="My School">
+        <t t-call="portal.portal_layout">
+            <t t-set="page_name" t-value="'school'"/>
+            <t t-set="breadcrumbs_searchbar" t-value="False"/>
+            <div class="container">
+                <h2 class="mt-3">My School</h2>
+                <p t-if="not students" class="alert alert-warning mt-3">
+                    There is no school data linked to your account yet. Please
+                    contact the school administration.
+                </p>
+
+                <div t-if="students" class="row mt-4">
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Students</h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li t-foreach="students" t-as="student">
+                                        <strong t-out="student.display_name"/>
+                                        <span t-if="student.student_admission_number">
+                                            (<t t-out="student.student_admission_number"/>)
+                                        </span>
+                                        <div t-if="student.student_classroom_id" class="text-muted">
+                                            Classroom: <t t-out="student.student_classroom_id.name"/>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Outstanding Fees</h5>
+                                <p class="display-6 mb-0" t-out="outstanding_total"
+                                   t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                <p class="text-muted mt-2">
+                                    across <t t-out="len(fee_enrollments)"/> enrollments
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-if="report_cards" class="mt-4">
+                    <h4>Report Cards</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Issue Date</th>
+                                <th>Student</th>
+                                <th>Term</th>
+                                <th>Overall %</th>
+                                <th>Letter</th>
+                                <th>GPA</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="report_cards" t-as="card">
+                                <td t-out="card.issue_date"/>
+                                <td t-out="card.student_id.display_name"/>
+                                <td t-out="card.term_id.name"/>
+                                <td t-out="card.overall_percentage" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-out="card.overall_letter"/>
+                                <td t-out="card.overall_gpa" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-out="card.state"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div t-if="recent_results" class="mt-4">
+                    <h4>Recent Exam Results</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Course</th>
+                                <th>Student</th>
+                                <th>Score</th>
+                                <th>%</th>
+                                <th>Letter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="recent_results" t-as="result">
+                                <td t-out="result.exam_id.display_name"/>
+                                <td t-out="result.course_id.display_name"/>
+                                <td t-out="result.student_id.display_name"/>
+                                <td><t t-out="result.score"/> / <t t-out="result.max_score"/></td>
+                                <td t-out="result.percentage" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <td t-out="result.letter_grade"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div t-if="fee_enrollments" class="mt-4">
+                    <h4>Fee Enrollments</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Structure</th>
+                                <th>Term</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="fee_enrollments" t-as="enrollment">
+                                <td t-out="enrollment.student_id.display_name"/>
+                                <td t-out="enrollment.structure_id.name"/>
+                                <td t-out="enrollment.term_id.name"/>
+                                <td t-out="enrollment.amount_total"/>
+                                <td t-out="enrollment.amount_paid"/>
+                                <td t-out="enrollment.amount_due"/>
+                                <td t-out="enrollment.state"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

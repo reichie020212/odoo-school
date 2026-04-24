@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_exam_result_portal,school.exam.result portal,school_exams.model_school_exam_result,base.group_portal,1,0,0,0
+access_school_report_card_portal,school.report.card portal,school_exams.model_school_report_card,base.group_portal,1,0,0,0
+access_school_report_card_line_portal,school.report.card.line portal,school_exams.model_school_report_card_line,base.group_portal,1,0,0,0
+access_school_fee_enrollment_portal,school.fee.enrollment portal,school_fees.model_school_fee_enrollment,base.group_portal,1,0,0,0
+access_school_fee_structure_portal,school.fee.structure portal,school_fees.model_school_fee_structure,base.group_portal,1,0,0,0
+access_school_fee_structure_line_portal,school.fee.structure.line portal,school_fees.model_school_fee_structure_line,base.group_portal,1,0,0,0
+access_school_exam_portal,school.exam portal,school_exams.model_school_exam,base.group_portal,1,0,0,0
+access_school_course_portal,school.course portal,school_academics.model_school_course,base.group_portal,1,0,0,0
+access_school_subject_portal,school.subject portal,school_academics.model_school_subject,base.group_portal,1,0,0,0
+access_school_academic_term_portal,school.academic.term portal,school_base.model_school_academic_term,base.group_portal,1,0,0,0
+access_school_academic_year_portal,school.academic.year portal,school_base.model_school_academic_year,base.group_portal,1,0,0,0
+access_school_classroom_portal,school.classroom portal,school_base.model_school_classroom,base.group_portal,1,0,0,0

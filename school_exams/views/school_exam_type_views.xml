@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_exam_type_list" model="ir.ui.view">
+        <field name="name">school.exam.type.list</field>
+        <field name="model">school.exam.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="default_weight"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_exam_type_form" model="ir.ui.view">
+        <field name="name">school.exam.type.form</field>
+        <field name="model">school.exam.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="e.g. Quiz"/>
+                            <field name="code" placeholder="QZ"/>
+                        </group>
+                        <group>
+                            <field name="default_weight"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_exam_type" model="ir.actions.act_window">
+        <field name="name">Exam Types</field>
+        <field name="res_model">school.exam.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

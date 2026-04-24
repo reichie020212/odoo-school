@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_grading_scale_reader,school.grading.scale reader,model_school_grading_scale,school_base.group_school_reader,1,0,0,0
+access_school_grading_scale_user,school.grading.scale user,model_school_grading_scale,school_base.group_school_user,1,0,0,0
+access_school_grading_scale_manager,school.grading.scale manager,model_school_grading_scale,school_base.group_school_manager,1,1,1,1
+access_school_grading_scale_band_reader,school.grading.scale.band reader,model_school_grading_scale_band,school_base.group_school_reader,1,0,0,0
+access_school_grading_scale_band_user,school.grading.scale.band user,model_school_grading_scale_band,school_base.group_school_user,1,0,0,0
+access_school_grading_scale_band_manager,school.grading.scale.band manager,model_school_grading_scale_band,school_base.group_school_manager,1,1,1,1
+access_school_exam_type_reader,school.exam.type reader,model_school_exam_type,school_base.group_school_reader,1,0,0,0
+access_school_exam_type_user,school.exam.type user,model_school_exam_type,school_base.group_school_user,1,0,0,0
+access_school_exam_type_manager,school.exam.type manager,model_school_exam_type,school_base.group_school_manager,1,1,1,1
+access_school_exam_reader,school.exam reader,model_school_exam,school_base.group_school_reader,1,0,0,0
+access_school_exam_user,school.exam user,model_school_exam,school_base.group_school_user,1,1,1,0
+access_school_exam_manager,school.exam manager,model_school_exam,school_base.group_school_manager,1,1,1,1
+access_school_exam_result_reader,school.exam.result reader,model_school_exam_result,school_base.group_school_reader,1,0,0,0
+access_school_exam_result_user,school.exam.result user,model_school_exam_result,school_base.group_school_user,1,1,1,0
+access_school_exam_result_manager,school.exam.result manager,model_school_exam_result,school_base.group_school_manager,1,1,1,1
+access_school_report_card_reader,school.report.card reader,model_school_report_card,school_base.group_school_reader,1,0,0,0
+access_school_report_card_user,school.report.card user,model_school_report_card,school_base.group_school_user,1,1,1,0
+access_school_report_card_manager,school.report.card manager,model_school_report_card,school_base.group_school_manager,1,1,1,1
+access_school_report_card_line_reader,school.report.card.line reader,model_school_report_card_line,school_base.group_school_reader,1,0,0,0
+access_school_report_card_line_user,school.report.card.line user,model_school_report_card_line,school_base.group_school_user,1,1,1,0
+access_school_report_card_line_manager,school.report.card.line manager,model_school_report_card_line,school_base.group_school_manager,1,1,1,1

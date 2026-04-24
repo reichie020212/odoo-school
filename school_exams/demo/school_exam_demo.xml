@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="exam_math_9a_quiz1" model="school.exam">
+            <field name="course_id" ref="school_academics.course_math_9a"/>
+            <field name="exam_type_id" ref="exam_type_quiz"/>
+            <field name="date" eval="'2026-08-21'"/>
+            <field name="max_score">50.0</field>
+            <field name="weight">20.0</field>
+            <field name="state">published</field>
+        </record>
+
+        <record id="exam_math_9a_midterm" model="school.exam">
+            <field name="course_id" ref="school_academics.course_math_9a"/>
+            <field name="exam_type_id" ref="exam_type_midterm"/>
+            <field name="date" eval="'2026-10-15'"/>
+            <field name="max_score">100.0</field>
+            <field name="weight">30.0</field>
+            <field name="state">published</field>
+        </record>
+
+    </data>
+</odoo>

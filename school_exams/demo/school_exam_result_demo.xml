@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Alice: quiz 45/50 (90%), midterm 87/100 (87%) → weighted 88.2 / B / 3.0. -->
+        <record id="result_alice_quiz1" model="school.exam.result">
+            <field name="exam_id" ref="exam_math_9a_quiz1"/>
+            <field name="student_id" ref="school_base.student_alice_garcia"/>
+            <field name="score">45.0</field>
+            <field name="remark">Strong showing on word problems.</field>
+        </record>
+        <record id="result_alice_midterm" model="school.exam.result">
+            <field name="exam_id" ref="exam_math_9a_midterm"/>
+            <field name="student_id" ref="school_base.student_alice_garcia"/>
+            <field name="score">87.0</field>
+        </record>
+
+        <!-- Ethan: quiz 40/50 (80%), midterm 72/100 (72%) → weighted 75.2 / C / 2.0. -->
+        <record id="result_ethan_quiz1" model="school.exam.result">
+            <field name="exam_id" ref="exam_math_9a_quiz1"/>
+            <field name="student_id" ref="school_base.student_ethan_tan"/>
+            <field name="score">40.0</field>
+        </record>
+        <record id="result_ethan_midterm" model="school.exam.result">
+            <field name="exam_id" ref="exam_math_9a_midterm"/>
+            <field name="student_id" ref="school_base.student_ethan_tan"/>
+            <field name="score">72.0</field>
+            <field name="remark">Needs more practice with algebraic fractions.</field>
+        </record>
+
+    </data>
+</odoo>

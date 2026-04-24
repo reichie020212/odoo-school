@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_exam_list" model="ir.ui.view">
+        <field name="name">school.exam.list</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state=='closed'" decoration-info="state=='published'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="exam_type_id"/>
+                <field name="max_score"/>
+                <field name="weight"/>
+                <field name="result_count"/>
+                <field name="average_percentage" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_exam_form" model="ir.ui.view">
+        <field name="name">school.exam.form</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_publish" type="object" string="Publish"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'published'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <button name="action_generate_result_placeholders" type="object"
+                            string="Create Result Rows" invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Autocomputed from type / course / date"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="course_id"/>
+                            <field name="exam_type_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="max_score"/>
+                            <field name="weight"/>
+                            <field name="grading_scale_id"
+                                   options="{'no_create': True}"
+                                   placeholder="Default"/>
+                            <field name="effective_scale_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Results" name="results">
+                            <field name="result_ids" context="{'default_exam_id': id}">
+                                <list editable="bottom">
+                                    <field name="student_id"/>
+                                    <field name="score"/>
+                                    <field name="max_score" readonly="1"/>
+                                    <field name="percentage" readonly="1"/>
+                                    <field name="letter_grade" readonly="1"/>
+                                    <field name="remark"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_exam_search" model="ir.ui.view">
+        <field name="name">school.exam.search</field>
+        <field name="model">school.exam</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="exam_type_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="published" string="Published" domain="[('state','=','published')]"/>
+                <filter name="closed" string="Closed" domain="[('state','=','closed')]"/>
+                <group>
+                    <filter name="group_course" string="Course" context="{'group_by': 'course_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'exam_type_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_exam" model="ir.actions.act_window">
+        <field name="name">Exams</field>
+        <field name="res_model">school.exam</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_exam_search"/>
+    </record>
+
+</odoo>

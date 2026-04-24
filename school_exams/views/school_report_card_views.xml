@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_report_card_list" model="ir.ui.view">
+        <field name="name">school.report.card.list</field>
+        <field name="model">school.report.card</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='final'" decoration-success="state=='distributed'">
+                <field name="issue_date"/>
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="term_id"/>
+                <field name="overall_percentage"/>
+                <field name="overall_letter"/>
+                <field name="overall_gpa"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_report_card_form" model="ir.ui.view">
+        <field name="name">school.report.card.form</field>
+        <field name="model">school.report.card</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate_lines" type="object"
+                            string="Generate Course Lines" invisible="state != 'draft'"/>
+                    <button name="action_finalize" type="object"
+                            string="Finalize" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_distribute" type="object"
+                            string="Mark Distributed" invisible="state != 'final'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state == 'draft'"/>
+                    <button name="action_print_report" type="object"
+                            string="Print PDF" class="btn-secondary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,final,distributed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="term_id"/>
+                            <field name="academic_year_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="issue_date"/>
+                            <field name="overall_percentage" readonly="1"/>
+                            <field name="overall_letter" readonly="1"/>
+                            <field name="overall_gpa" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Courses" name="courses">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="course_id"/>
+                                    <field name="subject_id" readonly="1"/>
+                                    <field name="teacher_id" readonly="1"/>
+                                    <field name="percentage" readonly="1"/>
+                                    <field name="letter_grade" readonly="1"/>
+                                    <field name="gpa_value" readonly="1"/>
+                                    <field name="is_incomplete" readonly="1" optional="hide"/>
+                                    <field name="teacher_remark"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Overall Remark" name="remark">
+                            <field name="teacher_remark" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_report_card_search" model="ir.ui.view">
+        <field name="name">school.report.card.search</field>
+        <field name="model">school.report.card</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="student_id"/>
+                <field name="term_id"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="final" string="Final" domain="[('state','=','final')]"/>
+                <filter name="distributed" string="Distributed" domain="[('state','=','distributed')]"/>
+                <group>
+                    <filter name="group_term" string="Term" context="{'group_by': 'term_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_report_card" model="ir.actions.act_window">
+        <field name="name">Report Cards</field>
+        <field name="res_model">school.report.card</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_report_card_search"/>
+    </record>
+
+</odoo>

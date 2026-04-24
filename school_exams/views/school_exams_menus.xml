@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_exams"
+              name="Exams"
+              parent="school_academics.menu_school_academics"
+              action="action_school_exam"
+              sequence="40"/>
+
+    <menuitem id="menu_school_exam_results"
+              name="Exam Results"
+              parent="school_academics.menu_school_academics"
+              action="action_school_exam_result"
+              sequence="50"/>
+
+    <menuitem id="menu_school_report_cards"
+              name="Report Cards"
+              parent="school_academics.menu_school_academics"
+              action="action_school_report_card"
+              sequence="60"/>
+
+    <menuitem id="menu_school_exam_types"
+              name="Exam Types"
+              parent="school_base.menu_school_configuration"
+              action="action_school_exam_type"
+              sequence="50"/>
+
+    <menuitem id="menu_school_grading_scales"
+              name="Grading Scales"
+              parent="school_base.menu_school_configuration"
+              action="action_school_grading_scale"
+              sequence="60"/>
+
+</odoo>

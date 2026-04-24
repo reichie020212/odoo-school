@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_library_category_list" model="ir.ui.view">
+        <field name="name">school.library.category.list</field>
+        <field name="model">school.library.category</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="book_count"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_library_category_form" model="ir.ui.view">
+        <field name="name">school.library.category.form</field>
+        <field name="model">school.library.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="description"/>
+                        <field name="book_count" readonly="1"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_library_category" model="ir.actions.act_window">
+        <field name="name">Library Categories</field>
+        <field name="res_model">school.library.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

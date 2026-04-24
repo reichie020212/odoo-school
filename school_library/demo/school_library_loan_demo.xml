@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Active loan: Alice borrowed Harry Potter copy #1.
+             (Copy state is set to 'borrowed' in school_library_book_demo.xml
+             so the two sides stay consistent on initial install.) -->
+        <record id="loan_alice_hp1" model="school.library.loan">
+            <field name="book_copy_id" ref="book_hp1_copy_1"/>
+            <field name="borrower_id" ref="school_base.student_alice_garcia"/>
+            <field name="borrow_date" eval="'2026-08-15'"/>
+            <field name="due_date" eval="'2026-08-29'"/>
+            <field name="state">borrowed</field>
+        </record>
+
+        <!-- Completed loan: Ben returned Cosmos copy #1 on time -->
+        <record id="loan_ben_cosmos" model="school.library.loan">
+            <field name="book_copy_id" ref="book_cosmos_copy_1"/>
+            <field name="borrower_id" ref="school_base.student_ben_garcia"/>
+            <field name="borrow_date" eval="'2026-08-01'"/>
+            <field name="due_date" eval="'2026-08-15'"/>
+            <field name="return_date" eval="'2026-08-14'"/>
+            <field name="state">returned</field>
+        </record>
+
+    </data>
+</odoo>

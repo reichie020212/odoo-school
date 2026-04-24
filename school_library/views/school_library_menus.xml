@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_library"
+              name="Library"
+              parent="school_base.menu_school_root"
+              sequence="45"/>
+
+    <menuitem id="menu_school_library_books"
+              name="Books"
+              parent="menu_school_library"
+              action="action_school_library_book"
+              sequence="10"/>
+
+    <menuitem id="menu_school_library_copies"
+              name="Copies"
+              parent="menu_school_library"
+              action="action_school_library_book_copy"
+              sequence="20"/>
+
+    <menuitem id="menu_school_library_loans"
+              name="Loans"
+              parent="menu_school_library"
+              action="action_school_library_loan"
+              sequence="30"/>
+
+    <menuitem id="menu_school_library_categories"
+              name="Library Categories"
+              parent="school_base.menu_school_configuration"
+              action="action_school_library_category"
+              sequence="90"/>
+
+    <menuitem id="menu_school_library_authors"
+              name="Library Authors"
+              parent="school_base.menu_school_configuration"
+              action="action_school_library_author"
+              sequence="95"/>
+
+</odoo>

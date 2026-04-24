@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_library_category_reader,school.library.category reader,model_school_library_category,school_base.group_school_reader,1,0,0,0
+access_school_library_category_user,school.library.category user,model_school_library_category,school_base.group_school_user,1,0,0,0
+access_school_library_category_manager,school.library.category manager,model_school_library_category,school_base.group_school_manager,1,1,1,1
+access_school_library_author_reader,school.library.author reader,model_school_library_author,school_base.group_school_reader,1,0,0,0
+access_school_library_author_user,school.library.author user,model_school_library_author,school_base.group_school_user,1,0,0,0
+access_school_library_author_manager,school.library.author manager,model_school_library_author,school_base.group_school_manager,1,1,1,1
+access_school_library_book_reader,school.library.book reader,model_school_library_book,school_base.group_school_reader,1,0,0,0
+access_school_library_book_user,school.library.book user,model_school_library_book,school_base.group_school_user,1,0,0,0
+access_school_library_book_manager,school.library.book manager,model_school_library_book,school_base.group_school_manager,1,1,1,1
+access_school_library_book_copy_reader,school.library.book.copy reader,model_school_library_book_copy,school_base.group_school_reader,1,0,0,0
+access_school_library_book_copy_user,school.library.book.copy user,model_school_library_book_copy,school_base.group_school_user,1,0,0,0
+access_school_library_book_copy_manager,school.library.book.copy manager,model_school_library_book_copy,school_base.group_school_manager,1,1,1,1
+access_school_library_loan_reader,school.library.loan reader,model_school_library_loan,school_base.group_school_reader,1,0,0,0
+access_school_library_loan_user,school.library.loan user,model_school_library_loan,school_base.group_school_user,1,1,1,0
+access_school_library_loan_manager,school.library.loan manager,model_school_library_loan,school_base.group_school_manager,1,1,1,1

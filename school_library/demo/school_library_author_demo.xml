@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="author_rowling" model="school.library.author">
+            <field name="name">J.K. Rowling</field>
+            <field name="bio">British author best known for the Harry Potter series.</field>
+        </record>
+        <record id="author_sagan" model="school.library.author">
+            <field name="name">Carl Sagan</field>
+            <field name="bio">American astronomer and science communicator.</field>
+        </record>
+        <record id="author_zinn" model="school.library.author">
+            <field name="name">Howard Zinn</field>
+            <field name="bio">American historian and author of "A People's History of the United States".</field>
+        </record>
+
+    </data>
+</odoo>

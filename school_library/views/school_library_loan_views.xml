@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_library_loan_list" model="ir.ui.view">
+        <field name="name">school.library.loan.list</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='borrowed' and not is_overdue"
+                  decoration-danger="is_overdue"
+                  decoration-success="state=='returned'"
+                  decoration-warning="state=='returned_late'"
+                  decoration-muted="state=='lost'">
+                <field name="name"/>
+                <field name="book_id"/>
+                <field name="book_copy_id"/>
+                <field name="borrower_id"/>
+                <field name="borrow_date"/>
+                <field name="due_date"/>
+                <field name="return_date"/>
+                <field name="is_overdue" invisible="1"/>
+                <field name="overdue_days" optional="show"/>
+                <field name="fine_amount" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_library_loan_form" model="ir.ui.view">
+        <field name="name">school.library.loan.form</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm Borrow"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_return" type="object" string="Mark Returned"
+                            class="oe_highlight" invisible="state != 'borrowed'"/>
+                    <button name="action_mark_lost" type="object" string="Mark Lost"
+                            invisible="state not in ('draft', 'borrowed')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,borrowed,returned"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="book_copy_id"
+                                   domain="[('state','in',['available','borrowed'])]"/>
+                            <field name="book_id" readonly="1"/>
+                            <field name="borrower_id"/>
+                        </group>
+                        <group>
+                            <field name="borrow_date"/>
+                            <field name="due_date"/>
+                            <field name="return_date"/>
+                            <field name="is_overdue" readonly="1"/>
+                            <field name="overdue_days" readonly="1"/>
+                            <field name="fine_amount" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_library_loan_search" model="ir.ui.view">
+        <field name="name">school.library.loan.search</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="book_id"/>
+                <field name="borrower_id"/>
+                <filter name="borrowed" string="Borrowed" domain="[('state','=','borrowed')]"/>
+                <filter name="overdue" string="Overdue" domain="[('is_overdue','=',True)]"/>
+                <filter name="returned_late" string="Returned Late" domain="[('state','=','returned_late')]"/>
+                <filter name="returned" string="Returned" domain="[('state','=','returned')]"/>
+                <filter name="lost" string="Lost" domain="[('state','=','lost')]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_borrower" string="Borrower" context="{'group_by': 'borrower_id'}"/>
+                    <filter name="group_book" string="Book" context="{'group_by': 'book_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_library_loan" model="ir.actions.act_window">
+        <field name="name">Loans</field>
+        <field name="res_model">school.library.loan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_library_loan_search"/>
+    </record>
+
+</odoo>

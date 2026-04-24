@@ -48,4 +48,5 @@ Access is governed by three groups: Reader, User, Manager — bound to the
     "application": True,
     "installable": True,
     "auto_install": False,
+    "post_init_hook": "_grant_admin_school_manager",
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_root"
+              name="School"
+              web_icon="school_base,static/description/icon.png"
+              sequence="60"/>
+
+    <menuitem id="menu_school_students"
+              name="Students"
+              parent="menu_school_root"
+              action="action_school_students"
+              sequence="10"/>
+
+    <menuitem id="menu_school_guardians"
+              name="Guardians"
+              parent="menu_school_root"
+              action="action_school_guardians"
+              sequence="20"/>
+
+    <menuitem id="menu_school_teachers"
+              name="Teachers"
+              parent="menu_school_root"
+              action="action_school_teachers"
+              sequence="30"/>
+
+    <menuitem id="menu_school_classrooms"
+              name="Classrooms"
+              parent="menu_school_root"
+              action="action_school_classroom"
+              sequence="40"/>
+
+    <menuitem id="menu_school_configuration"
+              name="Configuration"
+              parent="menu_school_root"
+              sequence="90"
+              groups="group_school_manager"/>
+
+    <menuitem id="menu_school_academic_years"
+              name="Academic Years"
+              parent="menu_school_configuration"
+              action="action_school_academic_year"
+              sequence="10"/>
+
+    <menuitem id="menu_school_academic_terms"
+              name="Academic Terms"
+              parent="menu_school_configuration"
+              action="action_school_academic_term"
+              sequence="20"/>
+
+    <!--
+        Expose the admission-number sequence to managers so they can edit
+        prefix, padding, next number etc. directly from the School menu.
+    -->
+    <record id="action_school_admission_sequence" model="ir.actions.act_window">
+        <field name="name">Admission Number Sequence</field>
+        <field name="res_model">ir.sequence</field>
+        <field name="view_mode">form</field>
+        <field name="res_id" ref="seq_student_admission"/>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_school_admission_sequence"
+              name="Admission Number Sequence"
+              parent="menu_school_configuration"
+              action="action_school_admission_sequence"
+              sequence="30"/>
+
+</odoo>

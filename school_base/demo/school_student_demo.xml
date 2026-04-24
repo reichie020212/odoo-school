@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Guardians (parents). Four families, two parents each. -->
+
+        <record id="guardian_carlos_garcia" model="res.partner">
+            <field name="name">Carlos Garcia</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0001</field>
+            <field name="email">carlos.garcia@example.com</field>
+        </record>
+        <record id="guardian_sofia_garcia" model="res.partner">
+            <field name="name">Sofia Garcia</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0002</field>
+            <field name="email">sofia.garcia@example.com</field>
+        </record>
+
+        <record id="guardian_ramon_bautista" model="res.partner">
+            <field name="name">Ramon Bautista</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0003</field>
+            <field name="email">ramon.bautista@example.com</field>
+        </record>
+        <record id="guardian_lucia_bautista" model="res.partner">
+            <field name="name">Lucia Bautista</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0004</field>
+            <field name="email">lucia.bautista@example.com</field>
+        </record>
+
+        <record id="guardian_david_tan" model="res.partner">
+            <field name="name">David Tan</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0005</field>
+            <field name="email">david.tan@example.com</field>
+        </record>
+        <record id="guardian_ellen_tan" model="res.partner">
+            <field name="name">Ellen Tan</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0006</field>
+            <field name="email">ellen.tan@example.com</field>
+        </record>
+
+        <record id="guardian_marco_villanueva" model="res.partner">
+            <field name="name">Marco Villanueva</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0007</field>
+            <field name="email">marco.villanueva@example.com</field>
+        </record>
+        <record id="guardian_patricia_villanueva" model="res.partner">
+            <field name="name">Patricia Villanueva</field>
+            <field name="is_guardian" eval="True"/>
+            <field name="phone">+63 917 100 0008</field>
+            <field name="email">patricia.villanueva@example.com</field>
+        </record>
+
+        <!-- Students. Admission numbers auto-generated via ir.sequence. -->
+
+        <record id="student_alice_garcia" model="res.partner">
+            <field name="name">Alice Garcia</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2012-03-14'"/>
+            <field name="student_gender">female</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_9a"/>
+            <field name="student_blood_type">o_pos</field>
+            <field name="student_emergency_contact_name">Carlos Garcia</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0001</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_carlos_garcia'), ref('guardian_sofia_garcia')])]"/>
+        </record>
+
+        <record id="student_ben_garcia" model="res.partner">
+            <field name="name">Ben Garcia</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2011-07-22'"/>
+            <field name="student_gender">male</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_10a"/>
+            <field name="student_blood_type">a_pos</field>
+            <field name="student_emergency_contact_name">Sofia Garcia</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0002</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_carlos_garcia'), ref('guardian_sofia_garcia')])]"/>
+        </record>
+
+        <record id="student_clara_bautista" model="res.partner">
+            <field name="name">Clara Bautista</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2012-11-05'"/>
+            <field name="student_gender">female</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_9b"/>
+            <field name="student_blood_type">b_pos</field>
+            <field name="student_emergency_contact_name">Ramon Bautista</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0003</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_ramon_bautista'), ref('guardian_lucia_bautista')])]"/>
+        </record>
+
+        <record id="student_dino_bautista" model="res.partner">
+            <field name="name">Dino Bautista</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2011-02-18'"/>
+            <field name="student_gender">male</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_10b"/>
+            <field name="student_blood_type">ab_neg</field>
+            <field name="student_medical_notes">Mild asthma — carries inhaler.</field>
+            <field name="student_emergency_contact_name">Lucia Bautista</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0004</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_ramon_bautista'), ref('guardian_lucia_bautista')])]"/>
+        </record>
+
+        <record id="student_ethan_tan" model="res.partner">
+            <field name="name">Ethan Tan</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2012-06-30'"/>
+            <field name="student_gender">male</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_9a"/>
+            <field name="student_blood_type">o_neg</field>
+            <field name="student_emergency_contact_name">David Tan</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0005</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_david_tan'), ref('guardian_ellen_tan')])]"/>
+        </record>
+
+        <record id="student_faye_tan" model="res.partner">
+            <field name="name">Faye Tan</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2011-10-12'"/>
+            <field name="student_gender">female</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_10b"/>
+            <field name="student_blood_type">a_neg</field>
+            <field name="student_emergency_contact_name">Ellen Tan</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0006</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_david_tan'), ref('guardian_ellen_tan')])]"/>
+        </record>
+
+        <record id="student_gina_villanueva" model="res.partner">
+            <field name="name">Gina Villanueva</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2011-04-09'"/>
+            <field name="student_gender">female</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_10a"/>
+            <field name="student_blood_type">b_neg</field>
+            <field name="student_emergency_contact_name">Marco Villanueva</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0007</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_marco_villanueva'), ref('guardian_patricia_villanueva')])]"/>
+        </record>
+
+        <record id="student_henry_villanueva" model="res.partner">
+            <field name="name">Henry Villanueva</field>
+            <field name="is_student" eval="True"/>
+            <field name="student_date_of_birth" eval="'2012-08-27'"/>
+            <field name="student_gender">male</field>
+            <field name="student_admission_date" eval="'2026-08-01'"/>
+            <field name="student_status">enrolled</field>
+            <field name="student_classroom_id" ref="classroom_9b"/>
+            <field name="student_blood_type">ab_pos</field>
+            <field name="student_emergency_contact_name">Patricia Villanueva</field>
+            <field name="student_emergency_contact_phone">+63 917 100 0008</field>
+            <field name="student_guardian_ids"
+                   eval="[(6, 0, [ref('guardian_marco_villanueva'), ref('guardian_patricia_villanueva')])]"/>
+        </record>
+
+    </data>
+</odoo>

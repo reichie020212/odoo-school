@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_academic_year_reader,school.academic.year reader,model_school_academic_year,group_school_reader,1,0,0,0
+access_school_academic_year_user,school.academic.year user,model_school_academic_year,group_school_user,1,0,0,0
+access_school_academic_year_manager,school.academic.year manager,model_school_academic_year,group_school_manager,1,1,1,1
+access_school_academic_term_reader,school.academic.term reader,model_school_academic_term,group_school_reader,1,0,0,0
+access_school_academic_term_user,school.academic.term user,model_school_academic_term,group_school_user,1,1,1,0
+access_school_academic_term_manager,school.academic.term manager,model_school_academic_term,group_school_manager,1,1,1,1
+access_school_classroom_reader,school.classroom reader,model_school_classroom,group_school_reader,1,0,0,0
+access_school_classroom_user,school.classroom user,model_school_classroom,group_school_user,1,1,1,0
+access_school_classroom_manager,school.classroom manager,model_school_classroom,group_school_manager,1,1,1,1

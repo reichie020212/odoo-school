@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="ay_2026_2027" model="school.academic.year">
+            <field name="name">2026–2027</field>
+            <field name="code">AY2627</field>
+            <field name="date_start" eval="'2026-08-01'"/>
+            <field name="date_end" eval="'2027-05-31'"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="term_2026_2027_s1" model="school.academic.term">
+            <field name="name">First Semester</field>
+            <field name="code">S1</field>
+            <field name="sequence">10</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="date_start" eval="'2026-08-01'"/>
+            <field name="date_end" eval="'2026-12-20'"/>
+        </record>
+
+        <record id="term_2026_2027_s2" model="school.academic.term">
+            <field name="name">Second Semester</field>
+            <field name="code">S2</field>
+            <field name="sequence">20</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="date_start" eval="'2027-01-05'"/>
+            <field name="date_end" eval="'2027-05-31'"/>
+        </record>
+
+    </data>
+</odoo>

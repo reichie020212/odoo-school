@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_employee_form_school" model="ir.ui.view">
+        <field name="name">hr.employee.form.school</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Teaching" name="school_teaching">
+                    <group>
+                        <group>
+                            <field name="is_teacher"/>
+                            <field name="teacher_employee_number"
+                                   invisible="not is_teacher"/>
+                            <field name="teacher_hire_date"
+                                   invisible="not is_teacher"/>
+                        </group>
+                    </group>
+                    <group string="Homeroom Classrooms" invisible="not is_teacher">
+                        <field name="teacher_homeroom_ids" nolabel="1">
+                            <list>
+                                <field name="academic_year_id"/>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="student_count"/>
+                            </list>
+                        </field>
+                    </group>
+                    <group string="Qualifications" invisible="not is_teacher">
+                        <field name="teacher_qualifications" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_teacher_list" model="ir.ui.view">
+        <field name="name">hr.employee.teacher.list</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="teacher_employee_number"/>
+                <field name="name"/>
+                <field name="work_email"/>
+                <field name="work_phone"/>
+                <field name="department_id"/>
+                <field name="teacher_homeroom_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_school_teachers" model="ir.actions.act_window">
+        <field name="name">Teachers</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_teacher', '=', True)]</field>
+        <field name="context">{'default_is_teacher': True}</field>
+    </record>
+
+</odoo>

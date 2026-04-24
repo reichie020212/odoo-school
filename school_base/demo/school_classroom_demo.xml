@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="classroom_9a" model="school.classroom">
+            <field name="name">Grade 9 — A</field>
+            <field name="code">9A</field>
+            <field name="grade_level">9</field>
+            <field name="section">A</field>
+            <field name="capacity">35</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="homeroom_teacher_id" ref="teacher_maria_santos"/>
+        </record>
+
+        <record id="classroom_9b" model="school.classroom">
+            <field name="name">Grade 9 — B</field>
+            <field name="code">9B</field>
+            <field name="grade_level">9</field>
+            <field name="section">B</field>
+            <field name="capacity">35</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="homeroom_teacher_id" ref="teacher_juan_dela_cruz"/>
+        </record>
+
+        <record id="classroom_10a" model="school.classroom">
+            <field name="name">Grade 10 — A</field>
+            <field name="code">10A</field>
+            <field name="grade_level">10</field>
+            <field name="section">A</field>
+            <field name="capacity">35</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="homeroom_teacher_id" ref="teacher_anna_reyes"/>
+        </record>
+
+        <record id="classroom_10b" model="school.classroom">
+            <field name="name">Grade 10 — B</field>
+            <field name="code">10B</field>
+            <field name="grade_level">10</field>
+            <field name="section">B</field>
+            <field name="capacity">35</field>
+            <field name="academic_year_id" ref="ay_2026_2027"/>
+            <field name="homeroom_teacher_id" ref="teacher_pedro_mendoza"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mail_template_fee_invoice_ready" model="mail.template">
+        <field name="name">School: Fee Invoice Ready</field>
+        <field name="model_id" ref="school_fees.model_school_fee_enrollment"/>
+        <field name="subject">Fee invoice ready — {{ object.structure_id.name }}</field>
+        <field name="email_from">{{ user.email_formatted or '' }}</field>
+        <field name="partner_to">{{ object.student_id.id }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear <t t-out="object.student_id.display_name or ''"/> family,</p>
+                <p>
+                    A new fee invoice has been generated for
+                    <strong t-out="object.structure_id.name or ''"/>
+                    (<t t-out="object.term_id.name or ''"/>).
+                </p>
+                <ul>
+                    <li>Total: <t t-out="object.amount_total or ''"/></li>
+                    <li>Scholarship applied: <t t-out="object.scholarship_total or 0"/></li>
+                    <li>Amount due: <t t-out="object.amount_due or ''"/></li>
+                </ul>
+                <p>
+                    Please log in to the school portal to review the detailed invoice
+                    and payment instructions.
+                </p>
+                <p>— The Registrar's Office</p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="mail_template_report_card_final" model="mail.template">
+        <field name="name">School: Report Card Finalized</field>
+        <field name="model_id" ref="school_exams.model_school_report_card"/>
+        <field name="subject">Report card ready — {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted or '' }}</field>
+        <field name="partner_to">{{ object.student_id.id }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear <t t-out="object.student_id.display_name or ''"/> family,</p>
+                <p>
+                    The report card for <strong t-out="object.term_id.name or ''"/>
+                    (<t t-out="object.academic_year_id.name or ''"/>) has been finalized.
+                </p>
+                <ul>
+                    <li>
+                        Overall: <t t-out="object.overall_percentage or 0"/>%
+                        (<t t-out="object.overall_letter or ''"/>)
+                    </li>
+                    <li>GPA: <t t-out="object.overall_gpa or 0"/></li>
+                </ul>
+                <p>
+                    You can download the PDF copy from the school portal or request a
+                    printed copy from the Registrar's Office.
+                </p>
+                <p>— The Registrar's Office</p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="mail_template_exam_published" model="mail.template">
+        <field name="name">School: Exam Published</field>
+        <field name="model_id" ref="school_exams.model_school_exam"/>
+        <field name="subject">New exam scheduled — {{ object.name }}</field>
+        <field name="email_from">{{ user.email_formatted or '' }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear student,</p>
+                <p>
+                    A new <t t-out="object.exam_type_id.name or ''"/> has been scheduled
+                    for <strong t-out="object.course_id.name or ''"/>.
+                </p>
+                <ul>
+                    <li>Date: <t t-out="object.date or ''"/></li>
+                    <li>Maximum score: <t t-out="object.max_score or 0"/></li>
+                    <li>Weight: <t t-out="object.weight or 0"/>%</li>
+                </ul>
+                <p>— Your teacher</p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+</odoo>

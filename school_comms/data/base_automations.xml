@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Automation rules: fire when a record transitions into the target
+        state (pre_domain matched a different state, post-domain matches
+        the new one). Admins can disable / tweak from Settings > Technical
+        > Automation Rules.
+    -->
+
+    <record id="automation_fee_invoice_notify" model="base.automation">
+        <field name="name">School: Notify when fee enrollment becomes invoiced</field>
+        <field name="model_id" ref="school_fees.model_school_fee_enrollment"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="filter_pre_domain">[('state', '!=', 'invoiced')]</field>
+        <field name="filter_domain">[('state', '=', 'invoiced')]</field>
+    </record>
+    <record id="automation_fee_invoice_notify_action" model="ir.actions.server">
+        <field name="name">Send fee invoice notification</field>
+        <field name="model_id" ref="school_fees.model_school_fee_enrollment"/>
+        <field name="state">mail_post</field>
+        <field name="template_id" ref="mail_template_fee_invoice_ready"/>
+        <field name="mail_post_method">comment</field>
+        <field name="base_automation_id" ref="automation_fee_invoice_notify"/>
+        <field name="usage">base_automation</field>
+    </record>
+
+    <record id="automation_report_card_final_notify" model="base.automation">
+        <field name="name">School: Notify when report card is finalized</field>
+        <field name="model_id" ref="school_exams.model_school_report_card"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="filter_pre_domain">[('state', '!=', 'final')]</field>
+        <field name="filter_domain">[('state', '=', 'final')]</field>
+    </record>
+    <record id="automation_report_card_final_notify_action" model="ir.actions.server">
+        <field name="name">Send report card notification</field>
+        <field name="model_id" ref="school_exams.model_school_report_card"/>
+        <field name="state">mail_post</field>
+        <field name="template_id" ref="mail_template_report_card_final"/>
+        <field name="mail_post_method">comment</field>
+        <field name="base_automation_id" ref="automation_report_card_final_notify"/>
+        <field name="usage">base_automation</field>
+    </record>
+
+    <record id="automation_exam_published_notify" model="base.automation">
+        <field name="name">School: Notify when exam is published</field>
+        <field name="model_id" ref="school_exams.model_school_exam"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="filter_pre_domain">[('state', '!=', 'published')]</field>
+        <field name="filter_domain">[('state', '=', 'published')]</field>
+    </record>
+    <record id="automation_exam_published_notify_action" model="ir.actions.server">
+        <field name="name">Send exam published notification</field>
+        <field name="model_id" ref="school_exams.model_school_exam"/>
+        <field name="state">mail_post</field>
+        <field name="template_id" ref="mail_template_exam_published"/>
+        <field name="mail_post_method">comment</field>
+        <field name="base_automation_id" ref="automation_exam_published_notify"/>
+        <field name="usage">base_automation</field>
+    </record>
+
+</odoo>

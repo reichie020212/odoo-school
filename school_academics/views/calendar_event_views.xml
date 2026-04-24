@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_calendar_event_form_school" model="ir.ui.view">
+        <field name="name">calendar.event.form.school</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="School Session" invisible="not school_course_id">
+                    <group>
+                        <field name="school_course_id" readonly="1"/>
+                        <field name="school_session_state"/>
+                    </group>
+                    <group>
+                        <field name="school_attendance_count" readonly="1"/>
+                        <field name="school_present_count" readonly="1"/>
+                    </group>
+                </group>
+                <group invisible="not school_course_id">
+                    <button name="action_school_mark_all_present" type="object"
+                            string="Mark All Present" class="oe_highlight"
+                            invisible="school_session_state == 'cancelled'"/>
+                    <button name="action_school_cancel_session" type="object"
+                            string="Cancel Session"
+                            invisible="school_session_state == 'cancelled'"/>
+                    <button name="action_open_school_attendance" type="object"
+                            string="Open Attendance" class="btn-secondary"/>
+                </group>
+                <group string="Attendance" invisible="not school_course_id">
+                    <field name="school_attendance_ids" nolabel="1" colspan="4">
+                        <list editable="bottom">
+                            <field name="student_id"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state=='present'"
+                                   decoration-danger="state=='absent'"
+                                   decoration-warning="state=='late'"
+                                   decoration-info="state=='excused'"/>
+                            <field name="note"/>
+                            <field name="recorded_by_id" optional="hide"/>
+                            <field name="recorded_at" optional="hide"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Dedicated action for "school sessions" = calendar events linked to a course. -->
+    <record id="action_school_sessions" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="domain">[('school_course_id', '!=', False)]</field>
+    </record>
+
+</odoo>

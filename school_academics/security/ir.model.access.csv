@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_subject_reader,school.subject reader,model_school_subject,school_base.group_school_reader,1,0,0,0
+access_school_subject_user,school.subject user,model_school_subject,school_base.group_school_user,1,1,1,0
+access_school_subject_manager,school.subject manager,model_school_subject,school_base.group_school_manager,1,1,1,1
+access_school_course_reader,school.course reader,model_school_course,school_base.group_school_reader,1,0,0,0
+access_school_course_user,school.course user,model_school_course,school_base.group_school_user,1,1,1,0
+access_school_course_manager,school.course manager,model_school_course,school_base.group_school_manager,1,1,1,1
+access_school_course_schedule_rule_reader,school.course.schedule.rule reader,model_school_course_schedule_rule,school_base.group_school_reader,1,0,0,0
+access_school_course_schedule_rule_user,school.course.schedule.rule user,model_school_course_schedule_rule,school_base.group_school_user,1,1,1,1
+access_school_course_schedule_rule_manager,school.course.schedule.rule manager,model_school_course_schedule_rule,school_base.group_school_manager,1,1,1,1
+access_school_attendance_reader,school.attendance reader,model_school_attendance,school_base.group_school_reader,1,0,0,0
+access_school_attendance_user,school.attendance user,model_school_attendance,school_base.group_school_user,1,1,1,0
+access_school_attendance_manager,school.attendance manager,model_school_attendance,school_base.group_school_manager,1,1,1,1

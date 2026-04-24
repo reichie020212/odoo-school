@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            One materialised session for course_math_9a on Mon 2026-08-03 at
+            08:00 — so attendance demo rows have a parent session to link to.
+        -->
+        <record id="session_math_9a_week1" model="calendar.event">
+            <field name="name">Mathematics — 9A</field>
+            <field name="start" eval="'2026-08-03 08:00:00'"/>
+            <field name="stop" eval="'2026-08-03 09:00:00'"/>
+            <field name="duration">1.0</field>
+            <field name="location">Grade 9 — A</field>
+            <field name="school_course_id" ref="course_math_9a"/>
+            <field name="school_session_state">completed</field>
+            <field name="partner_ids"
+                   eval="[(6, 0, [ref('school_base.student_alice_garcia'), ref('school_base.student_ethan_tan')])]"/>
+        </record>
+
+        <record id="attendance_alice_math_9a" model="school.attendance">
+            <field name="session_id" ref="session_math_9a_week1"/>
+            <field name="student_id" ref="school_base.student_alice_garcia"/>
+            <field name="state">present</field>
+        </record>
+
+        <record id="attendance_ethan_math_9a" model="school.attendance">
+            <field name="session_id" ref="session_math_9a_week1"/>
+            <field name="student_id" ref="school_base.student_ethan_tan"/>
+            <field name="state">late</field>
+            <field name="note">Arrived 10 minutes late — bus delay.</field>
+        </record>
+
+    </data>
+</odoo>

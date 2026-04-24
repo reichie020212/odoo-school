@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_academics"
+              name="Academics"
+              parent="school_base.menu_school_root"
+              sequence="35"/>
+
+    <menuitem id="menu_school_courses"
+              name="Courses"
+              parent="menu_school_academics"
+              action="action_school_course"
+              sequence="10"/>
+
+    <menuitem id="menu_school_sessions"
+              name="Sessions"
+              parent="menu_school_academics"
+              action="action_school_sessions"
+              sequence="20"/>
+
+    <menuitem id="menu_school_attendance"
+              name="Attendance"
+              parent="menu_school_academics"
+              action="action_school_attendance"
+              sequence="30"/>
+
+    <menuitem id="menu_school_subjects"
+              name="Subjects"
+              parent="school_base.menu_school_configuration"
+              action="action_school_subject"
+              sequence="40"/>
+
+</odoo>

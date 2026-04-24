@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="subject_math" model="school.subject">
+            <field name="name">Mathematics</field>
+            <field name="code">MATH-HS</field>
+            <field name="default_weekly_hours">5.0</field>
+            <field name="description">High school mathematics — algebra, geometry, and pre-calculus.</field>
+        </record>
+
+        <record id="subject_science" model="school.subject">
+            <field name="name">Science</field>
+            <field name="code">SCI-HS</field>
+            <field name="default_weekly_hours">4.0</field>
+            <field name="description">Integrated science covering biology, chemistry, and physics.</field>
+        </record>
+
+        <record id="subject_english" model="school.subject">
+            <field name="name">English</field>
+            <field name="code">ENG-HS</field>
+            <field name="default_weekly_hours">5.0</field>
+            <field name="description">English language and literature.</field>
+        </record>
+
+        <record id="subject_history" model="school.subject">
+            <field name="name">History</field>
+            <field name="code">HIST-HS</field>
+            <field name="default_weekly_hours">3.0</field>
+            <field name="description">World history and social studies.</field>
+        </record>
+
+    </data>
+</odoo>

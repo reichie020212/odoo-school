@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Embedded list used inside the course form. No standalone action. -->
+    <record id="view_school_course_schedule_rule_list" model="ir.ui.view">
+        <field name="name">school.course.schedule.rule.list</field>
+        <field name="model">school.course.schedule.rule</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="weekday"/>
+                <field name="time_start" widget="float_time"/>
+                <field name="duration" widget="float_time"/>
+                <field name="location"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

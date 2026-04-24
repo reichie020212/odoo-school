@@ -34,9 +34,16 @@ class CalendarEvent(models.Model):
         store=True,
     )
 
-    @api.depends("school_attendance_ids", "school_attendance_ids.state")
+    @api.depends("school_course_id", "school_attendance_ids", "school_attendance_ids.state")
     def _compute_school_attendance_counts(self):
         for rec in self:
+            # Non-school calendar events can't have attendance — skip the
+            # one2many access to avoid an unnecessary SQL probe for users who
+            # have many personal calendar events but no school sessions.
+            if not rec.school_course_id:
+                rec.school_attendance_count = 0
+                rec.school_present_count = 0
+                continue
             rec.school_attendance_count = len(rec.school_attendance_ids)
             rec.school_present_count = sum(1 for att in rec.school_attendance_ids if att.state == "present")
 

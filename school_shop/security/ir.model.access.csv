@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_shop_sale_reader,school.shop.sale reader,model_school_shop_sale,school_base.group_school_reader,1,0,0,0
+access_school_shop_sale_user,school.shop.sale user,model_school_shop_sale,school_base.group_school_user,1,1,1,0
+access_school_shop_sale_manager,school.shop.sale manager,model_school_shop_sale,school_base.group_school_manager,1,1,1,1
+access_school_shop_sale_line_reader,school.shop.sale.line reader,model_school_shop_sale_line,school_base.group_school_reader,1,0,0,0
+access_school_shop_sale_line_user,school.shop.sale.line user,model_school_shop_sale_line,school_base.group_school_user,1,1,1,1
+access_school_shop_sale_line_manager,school.shop.sale.line manager,model_school_shop_sale_line,school_base.group_school_manager,1,1,1,1

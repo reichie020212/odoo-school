@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_school_shop" model="ir.ui.view">
+        <field name="name">product.template.form.school.shop</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='list_price']" position="after">
+                <field name="is_school_shop_item"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_school_shop_items" model="ir.actions.act_window">
+        <field name="name">Shop Items</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_school_shop_item', '=', True)]</field>
+        <field name="context">{'default_is_school_shop_item': True, 'default_type': 'product'}</field>
+    </record>
+
+</odoo>

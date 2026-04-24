@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_school_shop_sale_list" model="ir.ui.view">
+        <field name="name">school.shop.sale.list</field>
+        <field name="model">school.shop.sale</field>
+        <field name="arch" type="xml">
+            <list decoration-info="state=='confirmed'" decoration-muted="state=='cancelled'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="buyer_id"/>
+                <field name="total_amount" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="picking_state" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_shop_sale_form" model="ir.ui.view">
+        <field name="name">school.shop.sale.form</field>
+        <field name="model">school.shop.sale</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_open_picking" type="object" string="Open Delivery"
+                            invisible="not picking_id"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state == 'cancelled'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="buyer_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="total_amount" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="picking_id" readonly="1"/>
+                            <field name="picking_state" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Items" name="items">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal" readonly="1"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_shop_sale" model="ir.actions.act_window">
+        <field name="name">Shop Sales</field>
+        <field name="res_model">school.shop.sale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

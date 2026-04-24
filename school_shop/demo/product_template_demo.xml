@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="product_uniform_shirt" model="product.product">
+            <field name="name">School Uniform Shirt (White)</field>
+            <field name="default_code">SHOP-UNIF-SHT</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="is_school_shop_item" eval="True"/>
+            <field name="list_price">450.0</field>
+        </record>
+
+        <record id="product_uniform_pants" model="product.product">
+            <field name="name">School Uniform Pants (Black)</field>
+            <field name="default_code">SHOP-UNIF-PTS</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="is_school_shop_item" eval="True"/>
+            <field name="list_price">600.0</field>
+        </record>
+
+        <record id="product_notebook" model="product.product">
+            <field name="name">Grade 9 Notebook (80 leaves)</field>
+            <field name="default_code">SHOP-NOTE-9</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="is_school_shop_item" eval="True"/>
+            <field name="list_price">75.0</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_shop"
+              name="Shop"
+              parent="school_base.menu_school_root"
+              sequence="65"/>
+
+    <menuitem id="menu_school_shop_sales"
+              name="Sales"
+              parent="menu_school_shop"
+              action="action_school_shop_sale"
+              sequence="10"/>
+
+    <menuitem id="menu_school_shop_items"
+              name="Shop Items"
+              parent="school_base.menu_school_configuration"
+              action="action_school_shop_items"
+              sequence="120"/>
+
+</odoo>

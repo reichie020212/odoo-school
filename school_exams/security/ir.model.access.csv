@@ -1,10 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_grading_scale_internal,school.grading.scale internal,model_school_grading_scale,base.group_user,1,0,0,0
 access_school_grading_scale_reader,school.grading.scale reader,model_school_grading_scale,school_base.group_school_reader,1,0,0,0
 access_school_grading_scale_user,school.grading.scale user,model_school_grading_scale,school_base.group_school_user,1,0,0,0
 access_school_grading_scale_manager,school.grading.scale manager,model_school_grading_scale,school_base.group_school_manager,1,1,1,1
+access_school_grading_scale_band_internal,school.grading.scale.band internal,model_school_grading_scale_band,base.group_user,1,0,0,0
 access_school_grading_scale_band_reader,school.grading.scale.band reader,model_school_grading_scale_band,school_base.group_school_reader,1,0,0,0
 access_school_grading_scale_band_user,school.grading.scale.band user,model_school_grading_scale_band,school_base.group_school_user,1,0,0,0
 access_school_grading_scale_band_manager,school.grading.scale.band manager,model_school_grading_scale_band,school_base.group_school_manager,1,1,1,1
+access_school_exam_type_internal,school.exam.type internal,model_school_exam_type,base.group_user,1,0,0,0
 access_school_exam_type_reader,school.exam.type reader,model_school_exam_type,school_base.group_school_reader,1,0,0,0
 access_school_exam_type_user,school.exam.type user,model_school_exam_type,school_base.group_school_user,1,0,0,0
 access_school_exam_type_manager,school.exam.type manager,model_school_exam_type,school_base.group_school_manager,1,1,1,1

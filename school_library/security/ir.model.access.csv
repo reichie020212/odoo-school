@@ -1,7 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_library_category_internal,school.library.category internal,model_school_library_category,base.group_user,1,0,0,0
 access_school_library_category_reader,school.library.category reader,model_school_library_category,school_base.group_school_reader,1,0,0,0
 access_school_library_category_user,school.library.category user,model_school_library_category,school_base.group_school_user,1,0,0,0
 access_school_library_category_manager,school.library.category manager,model_school_library_category,school_base.group_school_manager,1,1,1,1
+access_school_library_author_internal,school.library.author internal,model_school_library_author,base.group_user,1,0,0,0
 access_school_library_author_reader,school.library.author reader,model_school_library_author,school_base.group_school_reader,1,0,0,0
 access_school_library_author_user,school.library.author user,model_school_library_author,school_base.group_school_user,1,0,0,0
 access_school_library_author_manager,school.library.author manager,model_school_library_author,school_base.group_school_manager,1,1,1,1

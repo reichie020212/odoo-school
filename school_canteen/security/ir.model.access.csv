@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_canteen_dietary_tag_internal,school.canteen.dietary.tag internal,model_school_canteen_dietary_tag,base.group_user,1,0,0,0
 access_school_canteen_dietary_tag_reader,school.canteen.dietary.tag reader,model_school_canteen_dietary_tag,school_base.group_school_reader,1,0,0,0
 access_school_canteen_dietary_tag_user,school.canteen.dietary.tag user,model_school_canteen_dietary_tag,school_base.group_school_user,1,0,0,0
 access_school_canteen_dietary_tag_manager,school.canteen.dietary.tag manager,model_school_canteen_dietary_tag,school_base.group_school_manager,1,1,1,1

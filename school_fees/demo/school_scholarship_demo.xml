@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="scholarship_alice_merit" model="school.scholarship">
+            <field name="name">Merit Scholarship — 10% off</field>
+            <field name="enrollment_id" ref="enrollment_alice_g9_s1"/>
+            <field name="discount_type">percentage</field>
+            <field name="discount_percentage">10.0</field>
+            <field name="reason">Awarded for placing in the top 5 of last year's honor roll.</field>
+            <field name="state">applied</field>
+        </record>
+
+    </data>
+</odoo>

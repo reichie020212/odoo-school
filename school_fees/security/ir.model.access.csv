@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_fee_structure_reader,school.fee.structure reader,model_school_fee_structure,school_base.group_school_reader,1,0,0,0
+access_school_fee_structure_user,school.fee.structure user,model_school_fee_structure,school_base.group_school_user,1,0,0,0
+access_school_fee_structure_manager,school.fee.structure manager,model_school_fee_structure,school_base.group_school_manager,1,1,1,1
+access_school_fee_structure_line_reader,school.fee.structure.line reader,model_school_fee_structure_line,school_base.group_school_reader,1,0,0,0
+access_school_fee_structure_line_user,school.fee.structure.line user,model_school_fee_structure_line,school_base.group_school_user,1,0,0,0
+access_school_fee_structure_line_manager,school.fee.structure.line manager,model_school_fee_structure_line,school_base.group_school_manager,1,1,1,1
+access_school_fee_enrollment_reader,school.fee.enrollment reader,model_school_fee_enrollment,school_base.group_school_reader,1,0,0,0
+access_school_fee_enrollment_user,school.fee.enrollment user,model_school_fee_enrollment,school_base.group_school_user,1,1,1,0
+access_school_fee_enrollment_manager,school.fee.enrollment manager,model_school_fee_enrollment,school_base.group_school_manager,1,1,1,1
+access_school_scholarship_reader,school.scholarship reader,model_school_scholarship,school_base.group_school_reader,1,0,0,0
+access_school_scholarship_user,school.scholarship user,model_school_scholarship,school_base.group_school_user,1,1,1,0
+access_school_scholarship_manager,school.scholarship manager,model_school_scholarship,school_base.group_school_manager,1,1,1,1

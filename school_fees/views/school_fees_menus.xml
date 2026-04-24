@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_school_finance"
+              name="Finance"
+              parent="school_base.menu_school_root"
+              sequence="50"/>
+
+    <menuitem id="menu_school_fee_enrollments"
+              name="Fee Enrollments"
+              parent="menu_school_finance"
+              action="action_school_fee_enrollment"
+              sequence="10"/>
+
+    <menuitem id="menu_school_fee_invoices"
+              name="Fee Invoices"
+              parent="menu_school_finance"
+              action="action_school_fee_invoices"
+              sequence="15"/>
+
+    <menuitem id="menu_school_scholarships"
+              name="Scholarships"
+              parent="menu_school_finance"
+              action="action_school_scholarship"
+              sequence="20"/>
+
+    <menuitem id="menu_school_fee_structures"
+              name="Fee Structures"
+              parent="school_base.menu_school_configuration"
+              action="action_school_fee_structure"
+              sequence="70"/>
+
+    <menuitem id="menu_school_fee_items"
+              name="Fee Items"
+              parent="school_base.menu_school_configuration"
+              action="action_school_fee_items"
+              sequence="80"/>
+
+</odoo>

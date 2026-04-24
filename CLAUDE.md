@@ -4,9 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-School Management System for **Odoo 19 Community Edition** — a set of custom addon modules covering the full student lifecycle (to be built).
+School Management System for **Odoo 19 Community Edition** — a suite of 11 custom addon modules covering the full student lifecycle.
 
-**Modules:** To be added as the system is built. Each module will live at the repository root as a sibling directory with its own `__manifest__.py` and `__init__.py`.
+**Modules (all shipped):** Each lives at the repository root as a sibling directory with its own `__manifest__.py` and `__init__.py`.
+
+| Module | One-line purpose |
+|---|---|
+| `school_base` | Foundation — academic years, terms, classrooms, students (extends `res.partner` with `is_student`), guardians, teachers (extends `hr.employee` with `is_teacher`). |
+| `school_academics` | Subjects, courses (subject × term × classroom × teacher with auto-enrolled students), weekly schedule rules that materialise `calendar.event` sessions, per-session attendance. |
+| `school_exams` | Configurable grading scales with letter/GPA bands, exam types, exams, student results, term report cards with weighted grades and a QWeb PDF. |
+| `school_fees` | Fee items as products, fee structures per grade × term, per-student enrollments, fixed-amount / percentage scholarships, invoice generation against `account.move`. |
+| `school_library` | Book catalog + per-copy tracking + loan lifecycle + computed overdue fines from `ir.config_parameter`. |
+| `school_canteen` | Dietary tags shared across items and student allergies, prepaid wallets, topup/purchase transactions with allergy blocks. |
+| `school_shop` | Shop products (`is_school_shop_item`) with sales records; confirming creates `stock.picking` for storable lines. |
+| `school_transport` | Vehicles, routes with ordered stops, per-student assignments (one active per academic year). |
+| `school_portal` | `/my/school` dashboard for students/guardians with report cards, exam results, fee enrollments; record rules scope to own/ward data. |
+| `school_comms` | Mail templates and `base.automation` rules firing on fee-invoiced / report-card-final / exam-published state transitions. |
+| `school_homepage` | Website-based landing page at `/` with school identity, live stats, and portal/backend CTAs. Editable via Odoo Website builder. |
+
+Installing `school_homepage` pulls in the complete suite transitively. A root `README.md` summarises the above with install commands.
 
 **Infrastructure:** Docker Compose (dev + prod), PostgreSQL 16, Odoo 19 Community.
 

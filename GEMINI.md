@@ -1,13 +1,24 @@
 # GEMINI.md - Instructional Context for odoo-school
 
-This project is a School Management System for **Odoo 19 Community Edition** — a set of custom addon modules covering the full student lifecycle (to be built).
+This project is a School Management System for **Odoo 19 Community Edition** — a suite of 11 custom addon modules covering the full student lifecycle.
 
 ## Project Overview
 - **Purpose**: School Management System for Odoo 19 CE.
-- **Repository Structure**: This repository is mounted into Odoo's custom addons path (`/mnt/extra-addons/odoo-school`). Each module will be a sibling subdirectory at the repo root with its own `__manifest__.py` and `__init__.py`.
-- **Current State**: Initial scaffold — Docker Compose (dev + prod), Odoo 19 base configuration, tooling (uv, ruff, pre-commit). Module implementation has not started.
-- **Modules**: To be added as the system is built (e.g. `school_base`, `school_admissions`, `school_academic`, `school_billing`, `school_portal`, etc. — actual names and decomposition to be decided per Blueprint).
-- **Odoo CE modules expected to be reused**: `res.partner` (students/parents/guardians/teachers), `hr.employee` (staff/teachers), `calendar.event` (class schedules, exams, meetings), `product.product` (courses, supplies), `sale.order` / `account.move` (tuition billing), `stock.picking` (books, uniforms, supplies), `mail.thread` (chatter/activities), `portal` + `website` (student & parent portal), `event` / `event_sale` (school events, field trips), `survey` (exams, quizzes, feedback).
+- **Repository Structure**: This repository is mounted into Odoo's custom addons path (`/mnt/extra-addons/odoo-school`). Each module is a sibling subdirectory at the repo root with its own `__manifest__.py` and `__init__.py`.
+- **Current State**: **11 modules shipped and tested** — initial end-to-end build complete (145 tests passing on Odoo 19 CE). Docker Compose stack (dev + prod), tooling (uv, ruff, pre-commit), and documentation (root `README.md`, per-module `README.md`, per-module `docs/guide/<module>-erd.md` Mermaid ERDs) all in place.
+- **Modules (11, build order = dependency order)**:
+  1. `school_base` — academic years / terms / classrooms / students / guardians / teachers.
+  2. `school_academics` — subjects, courses, weekly schedules, `calendar.event` sessions, attendance.
+  3. `school_exams` — configurable grading scales, exams, results, report cards + QWeb PDF.
+  4. `school_fees` — fee items (as products), structures, enrollments, scholarships, invoicing via `account.move`.
+  5. `school_library` — catalog + per-copy tracking + loans + computed overdue fines.
+  6. `school_canteen` — dietary tags, prepaid wallets, topup/purchase transactions with allergy blocks.
+  7. `school_shop` — shop products + sales records + `stock.picking` on confirm.
+  8. `school_transport` — vehicles, routes with stops, per-student assignments (one active per year).
+  9. `school_portal` — `/my/school` dashboard for students/guardians, record rules narrow visibility.
+  10. `school_comms` — mail templates + `base.automation` rules firing on key state transitions.
+  11. `school_homepage` — website-editable landing page at `/`; installing it pulls the full suite.
+- **Odoo CE base modules reused across the suite**: `res.partner` (students / guardians), `hr.employee` (teachers), `calendar` (course sessions), `product` + `stock` (shop), `account` (invoicing), `mail` + `base_automation` (notifications), `portal` + `website` (self-service + homepage).
 
 ## Division of Labor
 

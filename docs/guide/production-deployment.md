@@ -96,14 +96,38 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml logs -f odoo
 
 Create the production database and install the full school suite. Installing `school_homepage` pulls in every other `school_*` module transitively.
 
+Use `docker compose run --rm`, **not** `docker compose exec`. The Odoo image's entrypoint is what translates the `HOST` / `USER` / `PASSWORD` env vars into `--db_host` / `--db_user` / `--db_password` flags; `exec` bypasses the entrypoint and the init will fail with `fe_sendauth: no password supplied`.
+
+### Option A — clean production database (no demo data)
+
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.prod.yml exec odoo \
-  odoo -d school_prod -i school_homepage --stop-after-init --without-demo=all
+docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm \
+  odoo odoo -d school_prod -i school_homepage --stop-after-init --without-demo=all
 ```
 
-`--without-demo=all` skips demo data — recommended for production. Drop it only if you want sample students, courses, etc. for evaluation.
+### Option B — load demo data (sample students, classrooms, fees, etc.)
 
-After init, restart the Odoo container so it picks up the freshly-installed modules under workers:
+There is **no `--with-demo` flag** in Odoo — demo is the default. You enable demo by **omitting** `--without-demo`:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm \
+  odoo odoo -d school_prod -i school_homepage --stop-after-init
+```
+
+> **Demo is a one-shot, DB-creation-time decision.** Odoo flips a `demo` flag on the database the first time it is created and uses that flag from then on. Re-running `-i school_homepage` later without `--without-demo` will **not** add demo data to an existing no-demo DB. To switch a database from no-demo to demo (or vice versa), drop and recreate it:
+>
+> ```bash
+> docker compose -f docker-compose.yml -f docker-compose.prod.yml stop odoo
+> docker compose -f docker-compose.yml -f docker-compose.prod.yml exec db dropdb -U odoo school_prod
+> # then re-run Option A or Option B above
+> docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d odoo
+> ```
+>
+> The same applies to the `without_demo` key in `odoo.conf` — it is only consulted during the first `-i` run on a non-existent database. Don't put it in `odoo.conf`; control demo per-init via the CLI flag above.
+
+### After init
+
+Restart the Odoo container so it picks up the freshly-installed modules under workers:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.prod.yml restart odoo
@@ -156,11 +180,11 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml build
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
-If the update touches model definitions, security rules, or views, run an Odoo upgrade pass:
+If the update touches model definitions, security rules, or views, run an Odoo upgrade pass via `run --rm` (so the entrypoint applies the DB credentials from env):
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.prod.yml exec odoo \
-  odoo -d school_prod -u school_homepage --stop-after-init
+docker compose -f docker-compose.yml -f docker-compose.prod.yml run --rm \
+  odoo odoo -d school_prod -u school_homepage --stop-after-init
 ```
 
 Use `-u <module>` to upgrade just one module. `school_homepage` cascades updates to every dependency.

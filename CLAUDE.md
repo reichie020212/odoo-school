@@ -167,6 +167,9 @@ These differ from Odoo 17/18 and most online tutorials. Always follow these patt
    - Add entries via `<div id="portal_service_category" position="inside">`.
    - Cards default to `d-none` (hidden) and are revealed by JS counter loading. Use `<t t-set="config_card" t-value="True"/>` to always show a card (like Addresses/Connection & Security).
 
+9. **`longpolling_port` removed — use `gevent_port` instead.**
+   Odoo 19 unified longpolling and websocket traffic on the gevent worker. The `longpolling_port` config key is gone; set `gevent_port = 8072` in `odoo.conf` (or pass `--gevent-port=8072` on the command line). Reverse-proxy / tunnel rules should route `/websocket` to the gevent port — the legacy `/longpolling/*` URL paths no longer exist. Anywhere you see `longpolling_port` in older tutorials, blueprints, or compose files, replace it with `gevent_port`.
+
 ## Known quirks
 
 - The canonical venv is `.venv/`, which `.gitignore` already covers.

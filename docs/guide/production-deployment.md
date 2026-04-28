@@ -83,7 +83,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 This starts:
 
 - `db` — Postgres 16, data persisted in the named volume `sms_db_data`.
-- `odoo` — container named `odoo-school`, listening on `8069` (HTTP) and `8072` (longpolling/websocket), filestore in the named volume `sms_odoo_filestore`, running with 2 workers.
+- `odoo` — container named `odoo-school`, listening on `8069` (HTTP) and `8072` (gevent / websocket), filestore in the named volume `sms_odoo_filestore`, running with 2 workers.
 
 Check status and tail logs:
 
@@ -116,7 +116,7 @@ Sign in at `http://<host>:8069` as `admin` / `admin` and immediately rotate the 
 The compose stack does **not** ship a reverse proxy. Front Odoo with nginx, Caddy, or Traefik on the same host (or a load balancer) and terminate TLS there. Minimum requirements:
 
 - Forward `:443` → Odoo `:8069` for HTTP traffic.
-- Forward websocket upgrades → Odoo `:8072` (gevent/longpolling). Path: `/websocket` and `/longpolling/*`.
+- Forward websocket upgrades → Odoo `:8072` (gevent). Path: `/websocket`. (Odoo 19 dropped the `/longpolling/*` routes — everything is websockets on the gevent port now.)
 - Set `X-Forwarded-Proto`, `X-Forwarded-For`, and `X-Forwarded-Host`.
 - Keep `proxy_mode = True` in `odoo.conf` (see step 4b).
 

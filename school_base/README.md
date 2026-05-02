@@ -42,14 +42,25 @@ Loaded when "Demo Data" is enabled on the database:
 - 4 classrooms (9A, 9B, 10A, 10B) with homeroom teachers.
 - 4 teachers (Maria Santos, Juan Dela Cruz, Anna Reyes, Pedro Mendoza).
 - 4 families × 2 guardians × 2 students = 8 guardians and 8 students, all linked.
-- 2 non-admin internal users for testers and viewers:
+- Non-admin demo accounts for testers and viewers (login == password):
 
-  | Login | Password | Group | Purpose |
+  **Generic backend roles** — not tied to a persona, just a group:
+
+  | Login | Group | Purpose |
+  |---|---|---|
+  | `school_user` | School User (+ Reader) | Day-to-day operations — testers exercising create/edit flows. |
+  | `school_reader` | School Reader | Read-only — viewers reviewing data without changing anything. |
+
+  **Persona accounts** — wired to the matching demo partner / employee:
+
+  | Login | Type | Linked to | Purpose |
   |---|---|---|---|
-  | `school_user` | `school_user` | School User (+ Reader) | Day-to-day operations — for testers exercising create/edit flows. |
-  | `school_reader` | `school_reader` | School Reader | Read-only — for viewers reviewing the data without changing anything. |
+  | `alice_garcia` | Portal | Student `Alice Garcia` | Student view of `/my/school` (own report cards, fees, exam results). |
+  | `carlos_garcia` | Portal | Guardian `Carlos Garcia` | Guardian view of `/my/school` — sees both wards (Alice & Ben). |
+  | `maria_santos` | Internal + School User | Teacher persona "Maria Santos" | Teacher's day-to-day backend access. |
+  | `school_registrar` | Internal + School Manager | "School Registrar" persona | Full school config — academic year lifecycle, etc. |
 
-  Demo passwords are intentionally trivial; never enable demo data in production.
+  Portal users (`alice_garcia`, `carlos_garcia`) see only `/my/school`, no backend menus — that is the design. Demo passwords are intentionally trivial; never enable demo data in production.
 
 External IDs follow the pattern `school_base.<record_id>` (e.g. `school_base.student_alice_garcia`) so downstream modules can reference them.
 

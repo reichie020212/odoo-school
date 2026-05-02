@@ -29,7 +29,7 @@ class TestDemoUsers(TransactionCase):
 
     def test_demo_user_has_school_user_group(self):
         self._skip_if_no_demo(self.demo_user)
-        self.assertEqual(self.demo_user.login, "school_user")
+        self.assertEqual(self.demo_user.login, "demo_user")
         self.assertTrue(self.demo_user.has_group("base.group_user"), "Demo user must be an internal user.")
         self.assertTrue(
             self.demo_user.has_group("school_base.group_school_user"),
@@ -46,7 +46,7 @@ class TestDemoUsers(TransactionCase):
 
     def test_demo_reader_has_only_reader_group(self):
         self._skip_if_no_demo(self.demo_reader)
-        self.assertEqual(self.demo_reader.login, "school_reader")
+        self.assertEqual(self.demo_reader.login, "demo_reader")
         self.assertTrue(self.demo_reader.has_group("base.group_user"), "Demo reader must be an internal user.")
         self.assertTrue(
             self.demo_reader.has_group("school_base.group_school_reader"),
@@ -73,7 +73,7 @@ class TestDemoUsers(TransactionCase):
     def test_demo_student_is_portal_user_linked_to_demo_partner(self):
         self._skip_if_no_demo(self.student_user)
         student_partner = self.env.ref("school_base.student_alice_garcia")
-        self.assertEqual(self.student_user.login, "alice_garcia")
+        self.assertEqual(self.student_user.login, "demo_student")
         self.assertEqual(
             self.student_user.partner_id,
             student_partner,
@@ -94,7 +94,7 @@ class TestDemoUsers(TransactionCase):
     def test_demo_guardian_is_portal_user_linked_to_demo_partner(self):
         self._skip_if_no_demo(self.guardian_user)
         guardian_partner = self.env.ref("school_base.guardian_carlos_garcia")
-        self.assertEqual(self.guardian_user.login, "carlos_garcia")
+        self.assertEqual(self.guardian_user.login, "demo_guardian")
         self.assertEqual(self.guardian_user.partner_id, guardian_partner)
         self.assertTrue(self.guardian_user.has_group("base.group_portal"))
         self.assertFalse(self.guardian_user.has_group("base.group_user"))
@@ -108,7 +108,7 @@ class TestDemoUsers(TransactionCase):
 
     def test_demo_teacher_is_internal_school_user(self):
         self._skip_if_no_demo(self.teacher_user)
-        self.assertEqual(self.teacher_user.login, "maria_santos")
+        self.assertEqual(self.teacher_user.login, "demo_teacher")
         self.assertTrue(self.teacher_user.has_group("base.group_user"))
         self.assertTrue(self.teacher_user.has_group("school_base.group_school_user"))
         self.assertFalse(
@@ -121,7 +121,7 @@ class TestDemoUsers(TransactionCase):
 
     def test_demo_registrar_is_school_manager(self):
         self._skip_if_no_demo(self.registrar_user)
-        self.assertEqual(self.registrar_user.login, "school_registrar")
+        self.assertEqual(self.registrar_user.login, "demo_registrar")
         self.assertTrue(self.registrar_user.has_group("base.group_user"))
         self.assertTrue(self.registrar_user.has_group("school_base.group_school_manager"))
         self.assertTrue(

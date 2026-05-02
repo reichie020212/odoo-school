@@ -42,25 +42,25 @@ Loaded when "Demo Data" is enabled on the database:
 - 4 classrooms (9A, 9B, 10A, 10B) with homeroom teachers.
 - 4 teachers (Maria Santos, Juan Dela Cruz, Anna Reyes, Pedro Mendoza).
 - 4 families × 2 guardians × 2 students = 8 guardians and 8 students, all linked.
-- Non-admin demo accounts for testers and viewers (login == password):
+- Non-admin demo accounts for testers and viewers. Login + password follow the `demo_<role>` pattern (login == password). For multiple accounts of the same role, suffix with `_2`, `_3`, etc. (e.g. a second demo student would be `demo_student_2`).
 
   **Generic backend roles** — not tied to a persona, just a group:
 
   | Login | Group | Purpose |
   |---|---|---|
-  | `school_user` | School User (+ Reader) | Day-to-day operations — testers exercising create/edit flows. |
-  | `school_reader` | School Reader | Read-only — viewers reviewing data without changing anything. |
+  | `demo_user` | School User (+ Reader) | Day-to-day operations — testers exercising create/edit flows. |
+  | `demo_reader` | School Reader | Read-only — viewers reviewing data without changing anything. |
 
   **Persona accounts** — wired to the matching demo partner / employee:
 
   | Login | Type | Linked to | Purpose |
   |---|---|---|---|
-  | `alice_garcia` | Portal | Student `Alice Garcia` | Student view of `/my/school` (own report cards, fees, exam results). |
-  | `carlos_garcia` | Portal | Guardian `Carlos Garcia` | Guardian view of `/my/school` — sees both wards (Alice & Ben). |
-  | `maria_santos` | Internal + School User | Teacher persona "Maria Santos" | Teacher's day-to-day backend access. |
-  | `school_registrar` | Internal + School Manager | "School Registrar" persona | Full school config — academic year lifecycle, etc. |
+  | `demo_student` | Portal | Student `Alice Garcia` | Student view of `/my/school` (own report cards, fees, exam results). |
+  | `demo_guardian` | Portal | Guardian `Carlos Garcia` | Guardian view of `/my/school` — sees both wards (Alice & Ben). |
+  | `demo_teacher` | Internal + School User | Teacher persona "Maria Santos" | Teacher's day-to-day backend access. |
+  | `demo_registrar` | Internal + School Manager | "School Registrar" persona | Full school config — academic year lifecycle, etc. |
 
-  Portal users (`alice_garcia`, `carlos_garcia`) see only `/my/school`, no backend menus — that is the design. Demo passwords are intentionally trivial; never enable demo data in production.
+  Portal users (`demo_student`, `demo_guardian`) see only `/my/school`, no backend menus — that is the design. Demo passwords are intentionally trivial; never enable demo data in production.
 
 External IDs follow the pattern `school_base.<record_id>` (e.g. `school_base.student_alice_garcia`) so downstream modules can reference them.
 

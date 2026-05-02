@@ -6,38 +6,42 @@
             Non-admin demo users so testers and viewers can sign in without
             needing the all-powerful admin account.
 
+            Login + password follow the `demo_<role>` pattern; for multiple
+            accounts of the same role suffix `_2`, `_3`, etc. (e.g. a second
+            demo student would be `demo_student_2`).
+
             Logins double as passwords for convenience in demo / tester
             environments — never enable demo data in production.
 
             Two flavours:
 
-            * Generic backend roles — `school_user` and `school_reader`. Not
+            * Generic backend roles — `demo_user` and `demo_reader`. Not
               tied to a specific persona; use them to exercise plain
               School User / School Reader access.
 
-            * Persona accounts — `alice_garcia` (student), `carlos_garcia`
-              (guardian), `maria_santos` (teacher), `school_registrar`
-              (registrar/manager). Wired to the matching demo
-              partner / employee where ACLs care (student & guardian must
-              own their portal records via `partner_id`).
+            * Persona accounts — `demo_student` (Alice), `demo_guardian`
+              (Carlos), `demo_teacher` (Maria), `demo_registrar`. Wired
+              to the matching demo partner / employee where ACLs care
+              (student & guardian must own their portal records via
+              `partner_id`).
         -->
 
         <!-- Generic backend roles -->
 
         <record id="demo_school_user" model="res.users">
             <field name="name">Demo School User</field>
-            <field name="login">school_user</field>
-            <field name="password">school_user</field>
-            <field name="email">school_user@example.com</field>
+            <field name="login">demo_user</field>
+            <field name="password">demo_user</field>
+            <field name="email">demo_user@example.com</field>
             <field name="group_ids"
                    eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_user')])]"/>
         </record>
 
         <record id="demo_school_reader" model="res.users">
             <field name="name">Demo School Reader</field>
-            <field name="login">school_reader</field>
-            <field name="password">school_reader</field>
-            <field name="email">school_reader@example.com</field>
+            <field name="login">demo_reader</field>
+            <field name="password">demo_reader</field>
+            <field name="email">demo_reader@example.com</field>
             <field name="group_ids"
                    eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_reader')])]"/>
         </record>
@@ -45,15 +49,15 @@
         <!-- Personas: student & guardian (portal users) -->
 
         <record id="demo_user_student_alice" model="res.users">
-            <field name="login">alice_garcia</field>
-            <field name="password">alice_garcia</field>
+            <field name="login">demo_student</field>
+            <field name="password">demo_student</field>
             <field name="partner_id" ref="student_alice_garcia"/>
             <field name="group_ids" eval="[(6, 0, [ref('base.group_portal')])]"/>
         </record>
 
         <record id="demo_user_guardian_carlos" model="res.users">
-            <field name="login">carlos_garcia</field>
-            <field name="password">carlos_garcia</field>
+            <field name="login">demo_guardian</field>
+            <field name="password">demo_guardian</field>
             <field name="partner_id" ref="guardian_carlos_garcia"/>
             <field name="group_ids" eval="[(6, 0, [ref('base.group_portal')])]"/>
         </record>
@@ -62,18 +66,18 @@
 
         <record id="demo_user_teacher_maria" model="res.users">
             <field name="name">Maria Santos</field>
-            <field name="login">maria_santos</field>
-            <field name="password">maria_santos</field>
-            <field name="email">maria.santos@example.com</field>
+            <field name="login">demo_teacher</field>
+            <field name="password">demo_teacher</field>
+            <field name="email">demo_teacher@example.com</field>
             <field name="group_ids"
                    eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_user')])]"/>
         </record>
 
         <record id="demo_user_registrar" model="res.users">
             <field name="name">School Registrar</field>
-            <field name="login">school_registrar</field>
-            <field name="password">school_registrar</field>
-            <field name="email">registrar@example.com</field>
+            <field name="login">demo_registrar</field>
+            <field name="password">demo_registrar</field>
+            <field name="email">demo_registrar@example.com</field>
             <field name="group_ids"
                    eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_manager')])]"/>
         </record>

@@ -44,6 +44,7 @@ Access is governed by three groups: Reader, User, Manager — bound to the
         "demo/school_teacher_demo.xml",
         "demo/school_classroom_demo.xml",
         "demo/school_student_demo.xml",
+        "demo/school_users_demo.xml",
     ],
     "application": True,
     "installable": True,

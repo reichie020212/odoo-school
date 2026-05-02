@@ -1,6 +1,7 @@
 from . import (
     test_academic_year,
     test_classroom,
+    test_demo_users,
     test_internal_user_access,
     test_post_init_hook,
     test_student_partner,

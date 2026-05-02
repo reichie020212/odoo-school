@@ -42,6 +42,14 @@ Loaded when "Demo Data" is enabled on the database:
 - 4 classrooms (9A, 9B, 10A, 10B) with homeroom teachers.
 - 4 teachers (Maria Santos, Juan Dela Cruz, Anna Reyes, Pedro Mendoza).
 - 4 families × 2 guardians × 2 students = 8 guardians and 8 students, all linked.
+- 2 non-admin internal users for testers and viewers:
+
+  | Login | Password | Group | Purpose |
+  |---|---|---|---|
+  | `school_user` | `school_user` | School User (+ Reader) | Day-to-day operations — for testers exercising create/edit flows. |
+  | `school_reader` | `school_reader` | School Reader | Read-only — for viewers reviewing the data without changing anything. |
+
+  Demo passwords are intentionally trivial; never enable demo data in production.
 
 External IDs follow the pattern `school_base.<record_id>` (e.g. `school_base.student_alice_garcia`) so downstream modules can reference them.
 

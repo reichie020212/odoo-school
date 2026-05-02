@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Non-admin demo users so testers and viewers can sign in without
+            needing the all-powerful admin account.
+
+            Logins double as passwords for convenience in demo / tester
+            environments — never enable demo data in production.
+        -->
+
+        <record id="demo_school_user" model="res.users">
+            <field name="name">Demo School User</field>
+            <field name="login">school_user</field>
+            <field name="password">school_user</field>
+            <field name="email">school_user@example.com</field>
+            <field name="group_ids"
+                   eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_user')])]"/>
+        </record>
+
+        <record id="demo_school_reader" model="res.users">
+            <field name="name">Demo School Reader</field>
+            <field name="login">school_reader</field>
+            <field name="password">school_reader</field>
+            <field name="email">school_reader@example.com</field>
+            <field name="group_ids"
+                   eval="[(6, 0, [ref('base.group_user'), ref('school_base.group_school_reader')])]"/>
+        </record>
+
+    </data>
+</odoo>

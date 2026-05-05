@@ -11,6 +11,7 @@ COPY --chown=odoo:odoo school_exams      /mnt/extra-addons/odoo-school/school_ex
 COPY --chown=odoo:odoo school_fees       /mnt/extra-addons/odoo-school/school_fees
 COPY --chown=odoo:odoo school_homepage   /mnt/extra-addons/odoo-school/school_homepage
 COPY --chown=odoo:odoo school_library    /mnt/extra-addons/odoo-school/school_library
+COPY --chown=odoo:odoo school_lockdown   /mnt/extra-addons/odoo-school/school_lockdown
 COPY --chown=odoo:odoo school_portal     /mnt/extra-addons/odoo-school/school_portal
 COPY --chown=odoo:odoo school_shop       /mnt/extra-addons/odoo-school/school_shop
 COPY --chown=odoo:odoo school_transport  /mnt/extra-addons/odoo-school/school_transport

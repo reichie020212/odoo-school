@@ -137,10 +137,48 @@ Sign in at `http://<host>:8069` as `admin` / `admin` and immediately rotate the 
 
 ## 8. Reverse proxy and TLS
 
-The compose stack does **not** ship a reverse proxy. Front Odoo with nginx, Caddy, or Traefik on the same host (or a load balancer) and terminate TLS there. Minimum requirements:
+You have two options:
+
+### 8a. Use the bundled nginx overlay (HTTP only)
+
+The repo ships `docker-compose.nginx.yml` and `docker/nginx/default.conf`. Layered on top of the prod stack, this drops in an `nginx:1.27-alpine` service that fronts Odoo with the correct upstreams already wired up — including the `/websocket` → `:8072` route that Odoo 19 requires (skipping that route causes `KeyError: 'socket'` and `Couldn't bind the websocket. Is the connection opened on the evented port (8072)?` in the logs).
+
+Bring the full HTTP-fronted stack up:
+
+```bash
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.prod.yml \
+  -f docker-compose.nginx.yml \
+  up -d --build
+```
+
+The nginx service publishes `:80` on the host, talks to `odoo:8069` and `odoo:8072` over the compose network (no host-port juggling), and runs a busybox-`wget` healthcheck against its own listener.
+
+Hardening once nginx is in front:
+
+- Bind Odoo's published ports to `127.0.0.1` (instead of all interfaces) so 8069/8072 are no longer reachable from outside the host. Add a tiny inline overlay:
+
+  ```yaml
+  # docker-compose.lo-only.yml
+  services:
+    odoo:
+      ports: !override
+        - "127.0.0.1:8069:8069"
+        - "127.0.0.1:8072:8072"
+  ```
+
+  Then add `-f docker-compose.lo-only.yml` to the chain above.
+- Keep `proxy_mode = True` in `odoo.conf` so Odoo trusts the `X-Forwarded-*` headers nginx is setting.
+
+This overlay is **HTTP-only**. For TLS, either terminate at a load balancer / cloud provider in front of this nginx, or extend `docker/nginx/default.conf` with a 443 server block and mount your certificates into the nginx container.
+
+### 8b. Bring your own reverse proxy
+
+If you'd rather use an existing nginx / Caddy / Traefik on the host or a separate appliance, the requirements are the same as what the bundled config does:
 
 - Forward `:443` → Odoo `:8069` for HTTP traffic.
-- Forward websocket upgrades → Odoo `:8072` (gevent). Path: `/websocket`. (Odoo 19 dropped the `/longpolling/*` routes — everything is websockets on the gevent port now.)
+- Forward websocket upgrades (`/websocket`) → Odoo `:8072` (gevent). (Odoo 19 dropped the `/longpolling/*` routes — everything is websockets on the gevent port now.)
 - Set `X-Forwarded-Proto`, `X-Forwarded-For`, and `X-Forwarded-Host`.
 - Keep `proxy_mode = True` in `odoo.conf` (see step 4b).
 
@@ -214,5 +252,5 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v
 - [ ] Stack up, healthcheck passing on `db`.
 - [ ] Database initialized with `--without-demo=all`.
 - [ ] `admin` user password rotated.
-- [ ] Reverse proxy with valid TLS certificate in front of port 8069/8072.
+- [ ] Reverse proxy in front of port 8069/8072 — either via the bundled `docker-compose.nginx.yml` overlay (§8a) or a separate proxy / load balancer (§8b). TLS terminated somewhere in front.
 - [ ] Backup job scheduled for both the Postgres volume and the filestore volume.

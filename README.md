@@ -1,6 +1,6 @@
 # odoo-school
 
-**School Management System for Odoo 19 Community Edition** — a suite of 11 custom addon modules covering the full student lifecycle from admissions through graduation, billing, library loans, canteen purchases, transport, and parent self-service.
+**School Management System for Odoo 19 Community Edition** — a suite of 12 custom addon modules covering the full student lifecycle from admissions through graduation, billing, library loans, canteen purchases, transport, and parent self-service.
 
 ## Architecture
 
@@ -38,6 +38,7 @@ school_homepage  (website-based landing page at /)
 | [`school_portal`](./school_portal/README.md) | `/my/school` dashboard for students and guardians showing report cards, recent exam results, outstanding fees. Record rules scope visibility to the portal user's own data or their wards. |
 | [`school_comms`](./school_comms/README.md) | Mail templates for fee-invoice-ready / report-card-final / exam-published, plus `base.automation` rules that fire on state transitions and post the templates as chatter messages. |
 | [`school_homepage`](./school_homepage/README.md) | Website-based landing page at `/` with school identity, live stats (students/teachers/classrooms/courses/books), and portal/backend call-to-action buttons. Editable via the Odoo Website builder. |
+| [`school_lockdown`](./school_lockdown/README.md) | Policy module: removes the *Change Password* button from My Preferences for non-admins (server-side backstop included) and disables the public *Reset Password* link via `auth_signup.reset_password = False`. Admin recovery via *Settings > Users* is preserved. Optional, not pulled in by `school_homepage`. |
 
 **145 tests across the suite**, 0 failures on Odoo 19 CE.
 
@@ -74,10 +75,10 @@ docker compose run --rm --no-deps odoo odoo \
     -d test_db -i school_exams --test-enable \
     --test-tags=/school_exams --stop-after-init
 
-# All school modules
+# All school modules (school_lockdown is optional and not transitively pulled in by school_homepage, so install it explicitly)
 docker compose run --rm --no-deps odoo odoo \
-    -d test_db -i school_homepage --test-enable \
-    --test-tags=/school_base,/school_academics,/school_exams,/school_fees,/school_library,/school_canteen,/school_shop,/school_transport,/school_portal,/school_comms,/school_homepage \
+    -d test_db -i school_homepage,school_lockdown --test-enable \
+    --test-tags=/school_base,/school_academics,/school_exams,/school_fees,/school_library,/school_canteen,/school_shop,/school_transport,/school_portal,/school_comms,/school_homepage,/school_lockdown \
     --stop-after-init
 ```
 

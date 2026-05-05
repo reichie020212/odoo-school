@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Hide the "Change Password" section on My Preferences for everyone
+        except system administrators. The original markup in
+        base.view_users_form_simple_modif renders a <div name="auth"> that
+        wraps the label, helper text and the button calling
+        preference_change_password — restricting that whole div is the
+        cleanest way to remove the affordance without leaving an orphaned
+        section title behind.
+    -->
+    <record id="view_users_form_simple_modif_lockdown" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.lockdown</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='auth']" position="attributes">
+                <attribute name="groups">base.group_system</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

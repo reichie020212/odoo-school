@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+            Disable the "Reset Password" link on the login page.
+
+            auth_signup.controllers.main reads this parameter and only
+            renders the reset-password form when the value is the string
+            'True'. Any other value (here: 'False') hides the link and
+            short-circuits /web/reset_password.
+
+            We intentionally use a <function> call (mirroring auth_signup's
+            own data file) instead of a <record> with noupdate="1": the
+            upstream module re-runs its own set_param('...', 'True') on
+            every install AND every upgrade, so a record override only
+            sticks until the next -u and is then silently reverted. By
+            executing set_param ourselves on the same hook — and being
+            ordered after auth_signup via the depends list in the manifest
+            — our 'False' is always the last write and wins.
+        -->
+        <function model="ir.config_parameter" name="set_param" eval="('auth_signup.reset_password', 'False')"/>
+    </data>
+</odoo>

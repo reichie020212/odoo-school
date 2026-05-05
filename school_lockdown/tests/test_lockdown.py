@@ -1,21 +1,24 @@
-from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase, tagged
+from odoo.exceptions import AccessDenied, UserError
+from odoo.tests.common import HttpCase, TransactionCase, tagged
+
+LOCKDOWN_MSG = "Self-service password changes are disabled"
 
 
 @tagged("post_install", "-at_install")
 class TestSchoolLockdown(TransactionCase):
-    """The lockdown module makes three guarantees:
+    """The lockdown module makes four guarantees:
 
     1. ``ir.config_parameter`` ``auth_signup.reset_password`` is ``'False'``
        so the public reset-password link is suppressed.
-    2. The ``preference_change_password`` server method raises ``UserError``
-       for non-admins, blocking any RPC that bypasses the hidden button.
-    3. System administrators bypass the gate — they continue down the
-       parent's code path (which is itself ``@check_identity``-protected
-       for HTTP, but our lockdown does not interfere).
+    2. The ``preference_change_password`` server method raises
+       ``UserError`` for non-admins — covers the backend My Preferences
+       button and any RPC that opens the wizard.
+    3. The public ``change_password`` API on ``res.users`` raises
+       ``UserError`` for non-admins — covers the portal ``/my/security``
+       form and any direct RPC call.
+    4. System administrators bypass both gates: backend self-service and
+       admin-issued recovery via ``_change_password`` continue to work.
     """
-
-    LOCKDOWN_MSG = "Self-service password changes are disabled"
 
     @classmethod
     def setUpClass(cls):
@@ -25,6 +28,7 @@ class TestSchoolLockdown(TransactionCase):
             {
                 "name": "Lockdown Tester",
                 "login": "test_lockdown_tester",
+                "password": "initial-pw",
             }
         )
 
@@ -40,19 +44,27 @@ class TestSchoolLockdown(TransactionCase):
     def test_non_admin_cannot_invoke_preference_change_password(self):
         with self.assertRaises(UserError) as cm:
             self.regular_user.with_user(self.regular_user).preference_change_password()
-        self.assertIn(self.LOCKDOWN_MSG, str(cm.exception))
+        self.assertIn(LOCKDOWN_MSG, str(cm.exception))
+
+    def test_non_admin_cannot_invoke_change_password(self):
+        """The portal /my/security route ultimately calls
+        ``res.users.change_password(old, new)`` on the public API.
+        Block at the model layer so we cover the portal AND any direct
+        RPC."""
+        with self.assertRaises(UserError) as cm:
+            self.Users.with_user(self.regular_user).change_password("initial-pw", "new-pw")
+        self.assertIn(LOCKDOWN_MSG, str(cm.exception))
 
     def test_admin_bypasses_lockdown_gate(self):
         """Admin must NOT hit our lockdown UserError. The parent method is
         ``@check_identity``-protected and raises an HTTP-only error when
         called outside a real request — that's expected and proves the
-        admin made it past our gate. If our gate had fired, the message
-        would be the lockdown one instead."""
+        admin made it past our gate."""
         admin = self.env.ref("base.user_admin")
         with self.assertRaises(UserError) as cm:
             admin.with_user(admin).preference_change_password()
         self.assertNotIn(
-            self.LOCKDOWN_MSG,
+            LOCKDOWN_MSG,
             str(cm.exception),
             "Admin must bypass the lockdown gate; only the framework's identity check should fire here.",
         )
@@ -75,3 +87,81 @@ class TestSchoolLockdown(TransactionCase):
             {"interactive": False},
         )
         self.assertEqual(auth_info["uid"], self.regular_user.id)
+
+
+@tagged("post_install", "-at_install")
+class TestSchoolLockdownPortal(HttpCase):
+    """End-to-end check that the portal /my/security POST cannot change a
+    non-admin's password. We exercise the real HTTP route against the test
+    server so the override on res.users.change_password is hit through the
+    same code path users would actually use."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.portal_user = cls.env["res.users"].create(
+            {
+                "name": "Portal Lockdown Tester",
+                "login": "test_lockdown_portal",
+                "password": "portal-initial-pw",
+                "group_ids": [(6, 0, [cls.env.ref("base.group_portal").id])],
+            }
+        )
+
+    def test_portal_change_password_post_does_not_change_password(self):
+        """A portal user POSTing to /my/security with a valid old password
+        and a fresh new password must NOT have their password changed.
+        Authoritative check: re-authenticate with the original password
+        afterwards. The visual error message lives inside the section we
+        hide via ``groups``, so we don't assert on the response body —
+        the security guarantee is "no password write happened"."""
+        self.authenticate("test_lockdown_portal", "portal-initial-pw")
+        response = self.url_open(
+            "/my/security",
+            data={
+                "csrf_token": self.csrf_token(),
+                "op": "password",
+                "old": "portal-initial-pw",
+                "new1": "attempt-new-pw",
+                "new2": "attempt-new-pw",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        # Original password still authenticates → the override blocked the write.
+        auth_info = self.env["res.users"].authenticate(
+            {
+                "type": "password",
+                "login": self.portal_user.login,
+                "password": "portal-initial-pw",
+            },
+            {"interactive": False},
+        )
+        self.assertEqual(
+            auth_info["uid"],
+            self.portal_user.id,
+            "Lockdown failed: portal POST to /my/security changed the password.",
+        )
+        # And the attempted new password must NOT authenticate.
+        # Odoo 19's authenticate() raises AccessDenied on bad creds rather
+        # than returning False/None.
+        with self.assertRaises(AccessDenied, msg="Lockdown failed: the attempted new password authenticates."):
+            self.env["res.users"].authenticate(
+                {
+                    "type": "password",
+                    "login": self.portal_user.login,
+                    "password": "attempt-new-pw",
+                },
+                {"interactive": False},
+            )
+
+    def csrf_token(self):
+        """Hit the security page first to scrape a fresh CSRF token from
+        the rendered form. The portal controller validates it on POST."""
+        page = self.url_open("/my/security").text
+        marker = 'name="csrf_token" value="'
+        idx = page.find(marker)
+        if idx == -1:
+            self.fail("Could not find CSRF token in /my/security response")
+        start = idx + len(marker)
+        end = page.find('"', start)
+        return page[start:end]

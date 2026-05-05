@@ -211,3 +211,6 @@ docs/plan/
 
 # Git worktrees for isolated feature work
 .worktrees/
+
+# Per-machine Docker Compose override (port remapping, etc.)
+docker-compose.local.yml

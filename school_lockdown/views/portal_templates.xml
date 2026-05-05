@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Hide the "Change Password" section on the portal /my/security page
+        for everyone except system administrators. The server-side
+        change_password override on res.users is the authoritative
+        backstop; this template tweak just removes the form so non-admins
+        don't even see the affordance.
+    -->
+    <template id="portal_my_security_lockdown" inherit_id="portal.portal_my_security">
+        <xpath expr="//section[@name='portal_change_password']" position="attributes">
+            <attribute name="groups">base.group_system</attribute>
+        </xpath>
+    </template>
+</odoo>

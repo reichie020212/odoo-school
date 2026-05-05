@@ -12,8 +12,11 @@ Changes after install:
 
 * The "Change Password" button is removed from My Preferences for everyone
   except system administrators (``base.group_system``).
-* Calling ``preference_change_password`` server-side raises a ``UserError``
-  for non-admins, so a crafted RPC cannot bypass the UI.
+* Calling ``preference_change_password`` or ``change_password`` server-side
+  raises a ``UserError`` for non-admins, so a crafted RPC and the portal
+  ``/my/security`` route both lose their teeth.
+* The portal ``/my/security`` template hides the "Change Password" section
+  for non-admins, so the form is not even rendered.
 * The ``auth_signup.reset_password`` ``ir.config_parameter`` is set to
   ``False`` so the "Reset Password" link no longer appears on the login page.
 
@@ -33,10 +36,14 @@ non-admin users.
         # tag) runs before ours. Our data file then re-runs the same call
         # with 'False' on every install/upgrade and wins.
         "auth_signup",
+        # portal owns the /my/security route and template that we hide
+        # the "Change Password" section in.
+        "portal",
     ],
     "data": [
         "data/auth_signup_data.xml",
         "views/res_users_views.xml",
+        "views/portal_templates.xml",
     ],
     "application": False,
     "installable": True,

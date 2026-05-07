@@ -153,10 +153,6 @@ class TestDemoUsers(TransactionCase):
             "Manager implies User (so Reader too) via the implied chain.",
         )
         self.assertTrue(
-            self.admin_user.has_group("base.group_erp_manager"),
-            "demo_admin manages users and access rights — that's group_erp_manager.",
-        )
-        self.assertTrue(
             self.admin_user.has_group("base.group_partner_manager"),
             "demo_admin manages all contacts (students, guardians, teachers).",
         )
@@ -164,13 +160,46 @@ class TestDemoUsers(TransactionCase):
     def test_demo_admin_cannot_reach_settings_or_install_apps(self):
         """The whole point of demo_admin: full school power, zero sysadmin power.
 
-        ``base.group_system`` is the gate for both the Settings → Technical
-        menu and the Apps install/upgrade actions in Odoo 19. If demo_admin
-        ever picks it up — directly or transitively via an implied_ids
-        change in a future migration — this guardrail trips.
+        In Odoo 19 the Settings root menu (``base.menu_administration``) is
+        restricted to two groups — ``base.group_system`` (Administrator)
+        and ``base.group_erp_manager`` (Access Rights). Holding either
+        one reveals Settings → Users & Companies / Translations /
+        Technical, and ``group_system`` additionally unlocks app
+        install. demo_admin must hold neither.
         """
         self._skip_if_no_demo(self.admin_user)
         self.assertFalse(
             self.admin_user.has_group("base.group_system"),
-            "demo_admin must NOT hold base.group_system — that grants Settings access and app install.",
+            "demo_admin must NOT hold base.group_system — grants Settings access and app install.",
+        )
+        self.assertFalse(
+            self.admin_user.has_group("base.group_erp_manager"),
+            "demo_admin must NOT hold base.group_erp_manager — it's the second gate on the Settings menu.",
+        )
+
+    def test_demo_admin_cannot_see_settings_menu(self):
+        """End-to-end check that the Settings menu is actually hidden.
+
+        Group assertions cover the inputs; this covers the observable
+        outcome a tester sees in the navbar. The check has to go
+        through ``_visible_menu_ids`` rather than a plain
+        ``ir.ui.menu.search`` — the latter only enforces ACLs / record
+        rules, while the navbar runs the full filter that combines
+        ``group_ids`` with the parent-cascade rule
+        (``ir_ui_menu.py::_visible_menu_ids``).
+
+        Pinned to ``debug=False``: in debug mode Odoo deliberately adds
+        ``base.group_no_one`` ("Technical Features") to every user,
+        which surfaces the Translations + Technical sub-menus and
+        cascades the Settings parent into view. That's Odoo design, not
+        a demo_admin misconfiguration.
+        """
+        self._skip_if_no_demo(self.admin_user)
+        settings_menu = self.env.ref("base.menu_administration")
+        visible_ids = self.env(user=self.admin_user)["ir.ui.menu"]._visible_menu_ids(debug=False)
+        self.assertNotIn(
+            settings_menu.id,
+            visible_ids,
+            "Settings menu must be hidden from demo_admin in normal (non-debug) mode — "
+            "that's the whole point of this user.",
         )

@@ -9,6 +9,10 @@ class TestDemoUsers(TransactionCase):
       (Maria), registrar (manager). Student & guardian are portal users
       whose ``partner_id`` must point at the matching demo partner so the
       ``school_portal`` record rules surface their own data.
+
+    * ``demo_admin`` — admin-equivalent without ``base.group_system``.
+      Has full school CRUD via Manager, plus user/contact management,
+      but cannot install apps or change technical settings.
     """
 
     @classmethod
@@ -20,6 +24,7 @@ class TestDemoUsers(TransactionCase):
         cls.guardian_user = cls.env.ref("school_base.demo_user_guardian_carlos", raise_if_not_found=False)
         cls.teacher_user = cls.env.ref("school_base.demo_user_teacher_maria", raise_if_not_found=False)
         cls.registrar_user = cls.env.ref("school_base.demo_user_registrar", raise_if_not_found=False)
+        cls.admin_user = cls.env.ref("school_base.demo_user_admin", raise_if_not_found=False)
 
     def _skip_if_no_demo(self, user):
         if not user:
@@ -131,4 +136,41 @@ class TestDemoUsers(TransactionCase):
         self.assertFalse(
             self.registrar_user.has_group("base.group_system"),
             "Registrar is a school manager, not the Odoo sysadmin.",
+        )
+
+    # -- Persona: demo_admin (admin-equivalent without sysadmin) --------------
+
+    def test_demo_admin_has_full_school_access(self):
+        self._skip_if_no_demo(self.admin_user)
+        self.assertEqual(self.admin_user.login, "demo_admin")
+        self.assertTrue(self.admin_user.has_group("base.group_user"))
+        self.assertTrue(
+            self.admin_user.has_group("school_base.group_school_manager"),
+            "demo_admin must hold School Manager so it has full CRUD on every school model.",
+        )
+        self.assertTrue(
+            self.admin_user.has_group("school_base.group_school_user"),
+            "Manager implies User (so Reader too) via the implied chain.",
+        )
+        self.assertTrue(
+            self.admin_user.has_group("base.group_erp_manager"),
+            "demo_admin manages users and access rights — that's group_erp_manager.",
+        )
+        self.assertTrue(
+            self.admin_user.has_group("base.group_partner_manager"),
+            "demo_admin manages all contacts (students, guardians, teachers).",
+        )
+
+    def test_demo_admin_cannot_reach_settings_or_install_apps(self):
+        """The whole point of demo_admin: full school power, zero sysadmin power.
+
+        ``base.group_system`` is the gate for both the Settings → Technical
+        menu and the Apps install/upgrade actions in Odoo 19. If demo_admin
+        ever picks it up — directly or transitively via an implied_ids
+        change in a future migration — this guardrail trips.
+        """
+        self._skip_if_no_demo(self.admin_user)
+        self.assertFalse(
+            self.admin_user.has_group("base.group_system"),
+            "demo_admin must NOT hold base.group_system — that grants Settings access and app install.",
         )
